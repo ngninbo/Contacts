@@ -1,0 +1,19 @@
+# Project exclude paths
+/.gradle/
+/Contacts/task/build/
+/Contacts/task/out/
+/Contacts/task/out/production/classes/
+/Topics/Abstract factory/Burgers/out/
+/Topics/Abstract factory/Burgers/out/production/classes/
+/Topics/Abstract factory/Laptop factory/out/
+/Topics/Abstract factory/Laptop factory/out/production/classes/
+/Topics/Abstract factory/Phone factory/out/
+/Topics/Abstract factory/Phone factory/out/production/classes/
+/Topics/Enumset/Basic job requirements/out/
+/Topics/Enumset/Basic job requirements/out/production/classes/
+/Topics/Enumset/Vaccination/out/
+/Topics/Enumset/Vaccination/out/production/classes/
+/Topics/Fields and methods in enum/Balance management/out/
+/Topics/Fields and methods in enum/Balance management/out/production/classes/
+/Topics/Fields and methods in enum/Theory/out/
+/Topics/Fields and methods in enum/Theory/out/production/classes/

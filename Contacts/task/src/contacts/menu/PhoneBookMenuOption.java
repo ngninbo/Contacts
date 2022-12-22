@@ -1,6 +1,9 @@
 package contacts.menu;
 
-import contacts.utils.InputValidator;
+import contacts.domain.Organization;
+import contacts.domain.Person;
+import contacts.factory.OrganizationFactory;
+import contacts.factory.PersonFactory;
 import contacts.domain.Contact;
 
 import java.util.ArrayList;
@@ -17,18 +20,26 @@ public class PhoneBookMenuOption {
     }
 
     public void add() {
-        Contact contact = new Contact();
+
         scanner = new Scanner(System.in);
+        Contact contact = null;
+        System.out.print("Enter the type (person, organization): ");
 
-        System.out.print("Enter the name: ");
-        contact.setName(scanner.nextLine());
-        System.out.print("Enter the surname: ");
-        contact.setSurname(scanner.nextLine());
-        System.out.print("Enter the number: ");
-        contact.setNumber(scanner.nextLine());
+        String type = scanner.nextLine();
 
-        contacts.add(contact);
-        System.out.println("The record added.");
+        switch (type) {
+            case "person":
+                contact = new PersonFactory().createContact();
+                break;
+            case "organization":
+                contact = new OrganizationFactory().createContact();
+                break;
+        }
+
+        if (contact != null) {
+            contacts.add(contact);
+            System.out.println("The record added.");
+        }
     }
 
     public void remove() {
@@ -59,27 +70,17 @@ public class PhoneBookMenuOption {
                 return;
             }
             Contact contact = contacts.get(contactIndex - 1);
-            System.out.print("Select a field (name, surname, number): ");
-            String field = scanner.nextLine();
+            Contact updatedContact;
 
-            if (InputValidator.isValidField(field)) {
-                System.out.printf("Enter %s: ", field);
-                String value = scanner.nextLine();
-
-                switch (field) {
-                    case "name":
-                        contact.setName(value);
-                        break;
-                    case "surname":
-                        contact.setSurname(value);
-                        break;
-                    case "number":
-                        contact.setNumber(value);
-                        break;
-                }
-
-                System.out.println("The record updated!");
+            if (contact instanceof Person) {
+                updatedContact = PersonFactory.edit((Person) contact);
+            } else {
+                updatedContact = OrganizationFactory.edit((Organization) contact);
             }
+
+            contacts.set(contactIndex - 1, updatedContact);
+
+            System.out.println("The record updated!");
         }
     }
 
@@ -90,8 +91,37 @@ public class PhoneBookMenuOption {
     public void list() {
         for (int i = 0, contactsSize = contacts.size(); i < contactsSize; i++) {
             Contact contact = contacts.get(i);
-            System.out.printf("%s. %s %s, ", i + 1, contact.getName(), contact.getSurname());
-            System.out.println(contact.getNumber());
+
+            if (contact instanceof Person) {
+                Person person = (Person) contact;
+                System.out.printf("%s. %s %s\n", i + 1, person.getName(), person.getSurname());
+            } else {
+                Organization org = (Organization) contact;
+                System.out.printf("%s. %s\n", i + 1, org.getOrganizationName());
+            }
+        }
+    }
+
+    public void info() {
+        list();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter index to show info: ");
+        int index = scanner.nextInt() - 1;
+        if (index < 0 || index > contacts.size()) {
+            return;
+        }
+
+        info(index);
+    }
+
+    public void info(int contactIndex) {
+        Contact contact = contacts.get(contactIndex);
+        if (contact instanceof Person) {
+            Person person = (Person) contact;
+            person.info();
+        } else {
+            Organization org = (Organization) contact;
+            org.info();
         }
     }
 }

@@ -2,31 +2,18 @@ package contacts.domain;
 
 import contacts.utils.InputValidator;
 
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class Contact {
+public abstract class Contact {
 
-    private String name;
-    private String surname;
-    private String number;
+    protected String number;
+    protected LocalDateTime createdTime;
+    protected LocalDateTime lastEditTime;
 
-    public Contact() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    {
+        this.createdTime = LocalDateTime.now();
+        this.lastEditTime = this.createdTime;
     }
 
     public String getNumber() {
@@ -42,25 +29,21 @@ public class Contact {
         this.number = number;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Contact)) return false;
-        Contact contact = (Contact) o;
-        return Objects.equals(getName(), contact.getName()) && Objects.equals(getSurname(), contact.getSurname()) && Objects.equals(getNumber(), contact.getNumber());
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getSurname(), getNumber());
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", number='" + number + '\'' +
-                '}';
+    public LocalDateTime getLastEditTime() {
+        return lastEditTime;
     }
+
+    public void setLastEditTime(LocalDateTime lastEditTime) {
+        this.lastEditTime = lastEditTime;
+    }
+
+    public abstract void info();
 }

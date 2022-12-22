@@ -567,6 +567,30 @@ files:
         }
     }
   learner_created: true
+- name: src/contacts/domain/Person.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/Gender.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/ContactFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/PersonFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/action/ContactInfoCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/Organization.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/OrganizationFactory.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5326#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 22 Dec 2022 09:55:20 UTC
 record: -1

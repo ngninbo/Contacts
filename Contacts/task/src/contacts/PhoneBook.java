@@ -16,7 +16,7 @@ public class PhoneBook {
 
     public void processCommand() {
         while (!exit) {
-            System.out.print("Enter action (add, remove, edit, count, list, exit): ");
+            System.out.print("Enter action (add, remove, edit, count, info, exit): ");
             Scanner scanner = new Scanner(System.in);
             String action = scanner.nextLine();
             switch (action) {
@@ -32,8 +32,8 @@ public class PhoneBook {
                 case "count":
                     new ContactCountCommand(menuOption).execute();
                     break;
-                case "list":
-                    new ContactListCommand(menuOption).execute();
+                case "info":
+                    new ContactInfoCommand(menuOption).execute();
                     break;
                 case "exit":
                     exit = true;
@@ -41,6 +41,7 @@ public class PhoneBook {
                 default:
                     // implement me
             }
+            System.out.println();
         }
     }
 }

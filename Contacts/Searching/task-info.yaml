@@ -205,6 +205,712 @@ files:
     \        }\n        catch (Exception ex) {\n            return new CheckResult(false,\
     \ \"Can't check the answer\");\n        }\n    }\n}\n"
   learner_created: false
+- name: src/contacts/command/ContactCountCommand.java
+  visible: true
+  text: |
+    package contacts.command;
+
+    import contacts.controller.ContactController;
+
+    public class ContactCountCommand implements Command {
+
+        @Override
+        public void execute() {
+            ContactController.getControllerInstance().count();
+        }
+    }
+  learner_created: true
+- name: src/contacts/command/ContactInfoCommand.java
+  visible: true
+  text: |
+    package contacts.command;
+
+    import contacts.controller.ContactController;
+
+    public class ContactInfoCommand implements Command {
+
+        @Override
+        public void execute() {
+            ContactController.getControllerInstance().info();
+        }
+    }
+  learner_created: true
+- name: src/contacts/factory/ContactFactory.java
+  visible: true
+  text: |
+    package contacts.factory;
+
+    import contacts.domain.Contact;
+
+    public interface ContactFactory {
+
+        Contact createContact();
+    }
+  learner_created: true
+- name: src/contacts/utils/PhoneBookUtils.java
+  visible: true
+  text: |
+    package contacts.utils;
+
+    import java.util.Scanner;
+
+    public class PhoneBookUtils {
+
+        public static String requestInput(String message) {
+            System.out.print(message);
+            return new Scanner(System.in).nextLine();
+        }
+    }
+  learner_created: true
+- name: src/contacts/command/Command.java
+  visible: true
+  text: |
+    package contacts.command;
+
+    public interface Command {
+
+        void execute();
+    }
+  learner_created: true
+- name: src/contacts/domain/Person.java
+  visible: true
+  text: |
+    package contacts.domain;
+
+    import java.util.Objects;
+
+    public class Person extends Contact {
+
+        private String name;
+        private String surname;
+        private String birthdate;
+        private String gender;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getSurname() {
+            return surname;
+        }
+
+        public void setSurname(String surname) {
+            this.surname = surname;
+        }
+
+        public String getBirthdate() {
+            return birthdate;
+        }
+
+        public void setBirthdate(String birthdate) {
+            if (!birthdate.matches("^\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$")) {
+                System.out.println("Bad birth date!");
+                birthdate = "[no data]";
+            }
+            this.birthdate = birthdate;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+
+            if (!gender.matches("[FM]")) {
+                System.out.println("Bad gender!");
+                gender = "[no data]";
+            }
+
+            this.gender = gender;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Person)) return false;
+            Person person = (Person) o;
+            return Objects.equals(getName(), person.getName()) && Objects.equals(getSurname(), person.getSurname()) &&
+                    Objects.equals(getBirthdate(), person.getBirthdate()) && Objects.equals(getGender(), person.getGender());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(getName(), getSurname(), getBirthdate(), getGender());
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "number='" + number + '\'' +
+                    ", name='" + name + '\'' +
+                    ", surname='" + surname + '\'' +
+                    ", birthdate='" + birthdate + '\'' +
+                    ", gender=" + gender +
+                    '}';
+        }
+
+        @Override
+        public void info() {
+            System.out.printf("Name: %s\nSurname: %s\nBirth date: %s\nGender: " +
+                    "%s\nNumber: %s\nTime created: %s\nTime last edit: %s\n",
+                    name, surname, birthdate, gender, number, createdTime, lastEditTime);
+        }
+
+        @Override
+        public String getFullName() {
+            return String.format("%s %s", name, surname);
+        }
+    }
+  learner_created: true
+- name: src/contacts/domain/Organization.java
+  visible: true
+  text: |
+    package contacts.domain;
+
+    import java.util.Objects;
+
+    public class Organization extends Contact {
+
+        private String organizationName;
+        private String address;
+
+        public String getOrganizationName() {
+            return organizationName;
+        }
+
+        public void setOrganizationName(String organizationName) {
+            this.organizationName = organizationName;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Organization)) return false;
+            Organization that = (Organization) o;
+            return Objects.equals(getOrganizationName(), that.getOrganizationName()) && Objects.equals(getAddress(), that.getAddress());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(getOrganizationName(), getAddress());
+        }
+
+        @Override
+        public String toString() {
+            return "Organization{" +
+                    "number='" + number + '\'' +
+                    ", organizationName='" + organizationName + '\'' +
+                    ", address='" + address + '\'' +
+                    '}';
+        }
+
+        @Override
+        public void info() {
+            System.out.printf("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s\n",
+                    organizationName, address, number, createdTime, lastEditTime);
+        }
+
+        @Override
+        public String getFullName() {
+            return organizationName;
+        }
+    }
+  learner_created: true
+- name: src/contacts/command/ContactEditCommand.java
+  visible: true
+  text: |
+    package contacts.command;
+
+    import contacts.controller.ContactController;
+
+    public class ContactEditCommand implements Command {
+
+        @Override
+        public void execute() {
+            ContactController.getControllerInstance().edit();
+        }
+
+    }
+  learner_created: true
+- name: src/contacts/factory/CommandFactory.java
+  visible: true
+  text: |
+    package contacts.factory;
+
+    import contacts.command.*;
+
+    public class CommandFactory {
+
+        public Command getCommand(String action) {
+
+            switch (action) {
+                case "add":
+                    return new ContactAddCommand();
+                case "remove":
+                    return new ContactRemoveCommand();
+                case "edit":
+                    return new ContactEditCommand();
+                case "count":
+                    return new ContactCountCommand();
+                case "info":
+                    return new ContactInfoCommand();
+                default:
+            }
+
+            return null;
+        }
+    }
+  learner_created: true
+- name: src/contacts/controller/ContactController.java
+  visible: true
+  text: |
+    package contacts.controller;
+
+    import contacts.command.ContactEditionContext;
+    import contacts.domain.Contact;
+    import contacts.factory.OrganizationFactory;
+    import contacts.factory.PersonFactory;
+    import contacts.service.ContactService;
+
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.stream.IntStream;
+
+    import static contacts.utils.PhoneBookUtils.requestInput;
+
+    public class ContactController implements ContactService {
+
+        private static final ContactService controllerInstance = new ContactController();
+
+        private final List<Contact> contacts;
+
+        {
+            contacts = new ArrayList<>();
+        }
+
+        public static ContactService getControllerInstance() {
+
+            return controllerInstance == null ? new ContactController() : controllerInstance;
+
+        }
+
+        @Override
+        public void add() {
+            Contact contact = null;
+            String type = requestInput("Enter the type (person, organization): ");
+
+            switch (type) {
+                case "person":
+                    contact = new PersonFactory().createContact();
+                    break;
+                case "organization":
+                    contact = new OrganizationFactory().createContact();
+                    break;
+            }
+
+            if (contact != null) {
+                contacts.add(contact);
+                System.out.println("The record added.");
+            }
+        }
+
+        @Override
+        public void edit() {
+            if (contacts.isEmpty()) {
+                System.out.println("No records to edit!");
+            } else {
+
+                list();
+                int record = Integer.parseInt(requestInput("Select a record: "));
+
+                if (record < 0  || record > contacts.size()) {
+                    return;
+                }
+
+                final int index = record - 1;
+
+                contacts.set(index, new ContactEditionContext(contacts.get(index)).edit());
+
+                System.out.println("The record updated!");
+            }
+        }
+
+        @Override
+        public void remove() {
+            if (contacts.isEmpty()) {
+                System.out.println("No records to remove!");
+            } else {
+                list();
+                int choice = Integer.parseInt(requestInput("Select a record: "));
+                Contact contact = contacts.remove(choice - 1);
+                if (contact != null) {
+                    System.out.println("The record removed!");
+                }
+            }
+        }
+
+        @Override
+        public void count() {
+            System.out.printf("The Phone Book has %s records.\n", contacts.size());
+        }
+
+        @Override
+        public void info() {
+            list();
+            int index = Integer.parseInt(requestInput("Enter index to show info: ")) - 1;
+            if (index < 0 || index > contacts.size()) {
+                return;
+            }
+
+            contacts.get(index).info();
+        }
+
+        @Override
+        public void list() {
+            IntStream.range(0, contacts.size())
+                    .forEach(i -> System.out.printf("%s. %s\n", i + 1, contacts.get(i).getFullName()));
+        }
+    }
+  learner_created: true
+- name: src/contacts/command/ContactRemoveCommand.java
+  visible: true
+  text: |
+    package contacts.command;
+
+    import contacts.controller.ContactController;
+
+    public class ContactRemoveCommand implements Command {
+
+        @Override
+        public void execute() {
+            ContactController.getControllerInstance().remove();
+        }
+    }
+  learner_created: true
+- name: src/contacts/PhoneBook.java
+  visible: true
+  text: |
+    package contacts;
+
+    import contacts.command.Command;
+    import contacts.factory.CommandFactory;
+    import contacts.utils.PhoneBookUtils;
+
+    public class PhoneBook {
+
+        private final CommandFactory commandFactory;
+        private String action;
+
+        public PhoneBook(CommandFactory commandFactory) {
+            this.commandFactory = commandFactory;
+        }
+
+        public void processCommand() {
+            while (!"exit".equals(action)) {
+                action = PhoneBookUtils.requestInput("Enter action (add, remove, edit, count, info, exit): ");
+                Command command = commandFactory.getCommand(action);
+                if (command != null) {
+                    command.execute();
+                }
+                System.out.println();
+            }
+        }
+    }
+  learner_created: true
+- name: src/contacts/PhoneBookBuilder.java
+  visible: true
+  text: |-
+    package contacts;
+
+    import contacts.factory.CommandFactory;
+
+    public class PhoneBookBuilder {
+        private CommandFactory commandFactory;
+
+        private PhoneBookBuilder() {
+        }
+
+        public static PhoneBookBuilder init() {
+            return new PhoneBookBuilder();
+        }
+
+        public PhoneBookBuilder withCommandFactory(CommandFactory commandFactory) {
+            this.commandFactory = commandFactory;
+            return this;
+        }
+
+        public PhoneBook build() {
+            return new PhoneBook(commandFactory);
+        }
+    }
+  learner_created: true
+- name: src/contacts/command/ContactListCommand.java
+  visible: true
+  text: |
+    package contacts.command;
+
+    import contacts.controller.ContactController;
+
+    public class ContactListCommand implements Command {
+
+        @Override
+        public void execute() {
+            ContactController.getControllerInstance().list();
+        }
+    }
+  learner_created: true
+- name: src/contacts/factory/PersonFactory.java
+  visible: true
+  text: |
+    package contacts.factory;
+
+    import contacts.domain.Contact;
+    import contacts.domain.Person;
+    import contacts.utils.InputValidator;
+
+    import java.time.LocalDateTime;
+
+    import static contacts.utils.PhoneBookUtils.requestInput;
+
+    public class PersonFactory implements ContactFactory {
+
+        @Override
+        public Contact createContact() {
+
+            Person person = new Person();
+            person.setName(requestInput("Enter the name: "));
+            person.setSurname(requestInput("Enter the surname: "));
+            person.setBirthdate(requestInput("Enter the birth date: "));
+            person.setGender(requestInput("Enter the gender (M, F): "));
+            person.setNumber(requestInput("Enter the number: "));
+
+            return person;
+        }
+
+        public static Contact edit(Person person) {
+            String field = requestInput("Select a field (name, surname, birth, gender, number): ");
+
+            if (InputValidator.isValidPersonField(field)) {
+                String value = requestInput(String.format("Enter %s: ", field));
+
+                switch (field) {
+                    case "name":
+                        person.setName(value);
+                        break;
+                    case "surname":
+                        person.setSurname(value);
+                        break;
+                    case "birth":
+                        person.setBirthdate(value);
+                        break;
+                    case "gender":
+                        person.setGender(value);
+                        break;
+                    case "number":
+                        person.setNumber(value);
+                        break;
+                }
+
+                person.setLastEditTime(LocalDateTime.now());
+            }
+
+            return person;
+        }
+    }
+  learner_created: true
+- name: src/contacts/command/ContactAddCommand.java
+  visible: true
+  text: |
+    package contacts.command;
+
+    import contacts.controller.ContactController;
+
+    public class ContactAddCommand implements Command {
+
+        @Override
+        public void execute() {
+            ContactController.getControllerInstance().add();
+        }
+    }
+  learner_created: true
+- name: src/contacts/utils/InputValidator.java
+  visible: true
+  text: |
+    package contacts.utils;
+
+    import java.util.List;
+
+    public class InputValidator {
+
+        private static final String PHONE_NUMBER_REGEX = "^\\+?(\\(\\w+\\)|\\w+[ \\-]\\(\\w{2,}\\)|\\w+)([ \\-]\\w{2,})*$";
+        public static boolean isValidNumber(String number) {
+            return number.matches(PHONE_NUMBER_REGEX);
+        }
+
+        public static boolean isValidPersonField(String field) {
+            return field != null && List.of("name", "surname", "birth", "gender", "number").contains(field);
+        }
+
+        public static boolean isOrganizationField(String field) {
+            return field != null && List.of("address", "number").contains(field);
+        }
+    }
+  learner_created: true
+- name: src/contacts/domain/Contact.java
+  visible: true
+  text: |
+    package contacts.domain;
+
+    import contacts.utils.InputValidator;
+
+    import java.time.LocalDateTime;
+
+    public abstract class Contact {
+
+        protected String number;
+        protected LocalDateTime createdTime;
+        protected LocalDateTime lastEditTime;
+
+        {
+            this.createdTime = LocalDateTime.now();
+            this.lastEditTime = this.createdTime;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public void setNumber(String number) {
+            if (!InputValidator.isValidNumber(number)) {
+                System.out.println("Wrong number format!");
+                number = "[no number]";
+            }
+
+            this.number = number;
+        }
+
+        public LocalDateTime getCreatedTime() {
+            return createdTime;
+        }
+
+        public void setCreatedTime(LocalDateTime createdTime) {
+            this.createdTime = createdTime;
+        }
+
+        public LocalDateTime getLastEditTime() {
+            return lastEditTime;
+        }
+
+        public void setLastEditTime(LocalDateTime lastEditTime) {
+            this.lastEditTime = lastEditTime;
+        }
+
+        public abstract void info();
+
+        public abstract String getFullName();
+    }
+  learner_created: true
+- name: src/contacts/service/ContactService.java
+  visible: true
+  text: |
+    package contacts.service;
+
+    public interface ContactService {
+
+        void add();
+        void edit();
+        void remove();
+        void count();
+        void info();
+
+        void list();
+    }
+  learner_created: true
+- name: src/contacts/factory/OrganizationFactory.java
+  visible: true
+  text: |
+    package contacts.factory;
+
+    import contacts.domain.Contact;
+    import contacts.domain.Organization;
+    import contacts.utils.InputValidator;
+
+    import java.time.LocalDateTime;
+
+    import static contacts.utils.PhoneBookUtils.requestInput;
+
+    public class OrganizationFactory implements ContactFactory {
+
+        public static Contact edit(Organization organization) {
+
+            String field = requestInput("Select a field (address, number): ");
+
+            if (InputValidator.isOrganizationField(field)) {
+
+                String value = requestInput(String.format("Enter %s: ", field));
+
+                switch (field) {
+                    case "address":
+                        organization.setAddress(value);
+                        break;
+                    case "number":
+                        organization.setNumber(value);
+                        break;
+                }
+
+                organization.setLastEditTime(LocalDateTime.now());
+            }
+
+            return organization;
+        }
+
+        @Override
+        public Contact createContact() {
+            Organization organization = new Organization();
+            organization.setOrganizationName(requestInput("Enter the organization name: "));
+            organization.setAddress(requestInput("Enter the address: "));
+            organization.setNumber(requestInput("Enter the number: "));
+            return organization;
+        }
+    }
+  learner_created: true
+- name: src/contacts/command/ContactSearchCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/repository/ContactRepository.java
+  visible: true
+  learner_created: true
+- name: src/contacts/repository/BaseRepository.java
+  visible: true
+  learner_created: true
+- name: src/contacts/command/ContactModificationCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/service/ContactModificationStrategy.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/ContactModificationAction.java
+  visible: true
+  learner_created: true
+- name: src/contacts/utils/SerializationUtils.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5327#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: Wed, 28 Dec 2022 06:03:06 UTC
 record: -1

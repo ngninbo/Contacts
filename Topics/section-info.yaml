@@ -2,3 +2,7 @@ content:
 - Fields and methods in enum
 - Enumset
 - Abstract factory
+- Declaring a method
+- Command-line arguments
+- Input streams
+- Custom serialization

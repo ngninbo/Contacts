@@ -1,45 +1,25 @@
 package contacts;
 
-import contacts.action.*;
-import contacts.menu.PhoneBookMenuOption;
-
-import java.util.Scanner;
+import contacts.command.Command;
+import contacts.factory.CommandFactory;
+import contacts.utils.PhoneBookUtils;
 
 public class PhoneBook {
 
-    private boolean exit;
-    private final PhoneBookMenuOption menuOption;
+    private final CommandFactory commandFactory;
+    private String action;
 
-    {
-        menuOption = new PhoneBookMenuOption();
+    public PhoneBook(CommandFactory commandFactory) {
+        this.commandFactory = commandFactory;
     }
 
     public void processCommand() {
-        while (!exit) {
-            System.out.print("Enter action (add, remove, edit, count, info, exit): ");
-            Scanner scanner = new Scanner(System.in);
-            String action = scanner.nextLine();
-            switch (action) {
-                case "add":
-                    new ContactAddCommand(menuOption).execute();
-                    break;
-                case "remove":
-                    new ContactRemoveCommand(menuOption).execute();
-                    break;
-                case "edit":
-                    new ContactEditCommand(menuOption).execute();
-                    break;
-                case "count":
-                    new ContactCountCommand(menuOption).execute();
-                    break;
-                case "info":
-                    new ContactInfoCommand(menuOption).execute();
-                    break;
-                case "exit":
-                    exit = true;
-                    break;
-                default:
-                    // implement me
+        System.out.println("open phonebook.db");
+        while (!"exit".equals(action)) {
+            action = PhoneBookUtils.requestInput("[menu] Enter action (add, list, search, count, exit): ");
+            Command command = commandFactory.getCommand(action);
+            if (command != null) {
+                command.execute();
             }
             System.out.println();
         }

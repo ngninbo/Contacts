@@ -1,5 +1,6 @@
 package contacts.domain;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Organization extends Contact {
@@ -49,5 +50,31 @@ public class Organization extends Contact {
     public void info() {
         System.out.printf("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s\n",
                 organizationName, address, number, createdTime, lastEditTime);
+    }
+
+    @Override
+    public String getFullName() {
+        return organizationName;
+    }
+
+    @Override
+    public String getEditableFields() {
+        return "address, number";
+    }
+
+    @Override
+    public void setFieldValue(String field, String value) {
+        if ("address".equals(field)) {
+            setAddress(value);
+        } else if ("number".equals(field)) {
+            setNumber(value);
+        }
+
+        setLastEditTime(LocalDateTime.now());
+    }
+
+    @Override
+    public String appendFieldValues() {
+        return getFullName() + " " + getNumber() + " " + getAddress();
     }
 }

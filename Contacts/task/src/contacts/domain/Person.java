@@ -1,5 +1,6 @@
 package contacts.domain;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Person extends Contact {
@@ -81,5 +82,44 @@ public class Person extends Contact {
         System.out.printf("Name: %s\nSurname: %s\nBirth date: %s\nGender: " +
                 "%s\nNumber: %s\nTime created: %s\nTime last edit: %s\n",
                 name, surname, birthdate, gender, number, createdTime, lastEditTime);
+    }
+
+    @Override
+    public String getFullName() {
+        return String.format("%s %s", name, surname);
+    }
+
+    @Override
+    public String getEditableFields() {
+        return "name, surname, birth, gender, number";
+    }
+
+    @Override
+    public void setFieldValue(String field, String value) {
+        switch (field) {
+            case "name":
+                setName(value);
+                break;
+            case "surname":
+                setSurname(value);
+                break;
+            case "birth":
+                setBirthdate(value);
+                break;
+            case "gender":
+                setGender(value);
+                break;
+            case "number":
+               setNumber(value);
+               break;
+            default:
+        }
+
+        setLastEditTime(LocalDateTime.now());
+    }
+
+    @Override
+    public String appendFieldValues() {
+        return getFullName() + " " + getBirthdate() + " " + getGender() + " " + getNumber();
     }
 }

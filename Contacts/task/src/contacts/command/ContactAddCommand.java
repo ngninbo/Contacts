@@ -1,0 +1,11 @@
+package contacts.command;
+
+import contacts.controller.ContactController;
+
+public class ContactAddCommand implements Command {
+
+    @Override
+    public void execute() {
+        ContactController.getControllerInstance().add();
+    }
+}

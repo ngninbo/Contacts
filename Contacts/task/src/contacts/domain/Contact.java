@@ -3,7 +3,6 @@ package contacts.domain;
 import contacts.utils.InputValidator;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public abstract class Contact {
 
@@ -46,4 +45,11 @@ public abstract class Contact {
     }
 
     public abstract void info();
+
+    public abstract String getFullName();
+
+    public abstract String getEditableFields();
+    public abstract void setFieldValue(String field, String value);
+
+    public abstract String appendFieldValues();
 }

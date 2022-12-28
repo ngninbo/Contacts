@@ -212,7 +212,167 @@ files:
     \      catch (Exception ex) {\n            return new CheckResult(false, \"Can't\
     \ check the answer\");\n        }\n    }\n}\n"
   learner_created: false
-- name: src/contacts/menu/PhoneBookMenuOption.java
+- name: src/contacts/PhoneBook.java
+  visible: true
+  text: |
+    package contacts;
+
+    import contacts.action.*;
+    import contacts.menu.PhoneBookMenuOption;
+
+    import java.util.Scanner;
+
+    public class PhoneBook {
+
+        private boolean exit;
+        private final PhoneBookMenuOption menuOption;
+
+        {
+            menuOption = new PhoneBookMenuOption();
+        }
+
+        public void processCommand() {
+            while (!exit) {
+                System.out.print("Enter action (add, remove, edit, count, list, exit): ");
+                Scanner scanner = new Scanner(System.in);
+                String action = scanner.nextLine();
+                switch (action) {
+                    case "add":
+                        new ContactAddCommand(menuOption).execute();
+                        break;
+                    case "remove":
+                        new ContactRemoveCommand(menuOption).execute();
+                        break;
+                    case "edit":
+                        new ContactEditCommand(menuOption).execute();
+                        break;
+                    case "count":
+                        new ContactCountCommand(menuOption).execute();
+                        break;
+                    case "list":
+                        new ContactListCommand(menuOption).execute();
+                        break;
+                    case "exit":
+                        exit = true;
+                        break;
+                    default:
+                        // implement me
+                }
+            }
+        }
+    }
+  learner_created: true
+- name: src/contacts/utils/InputValidator.java
+  visible: true
+  text: |
+    package contacts.utils;
+
+    import java.util.List;
+
+    public class InputValidator {
+
+        private static final String PHONE_NUMBER_REGEX = "^\\+?(\\(\\w+\\)|\\w+[ \\-]\\(\\w{2,}\\)|\\w+)([ \\-]\\w{2,})*$";
+        public static boolean isValidNumber(String number) {
+            return number.matches(PHONE_NUMBER_REGEX);
+        }
+
+        public static boolean isValidField(String field) {
+            return field != null && List.of("name", "surname", "number").contains(field);
+        }
+    }
+  learner_created: true
+- name: src/contacts/domain/Contact.java
+  visible: true
+  text: |
+    package contacts.domain;
+
+    import contacts.utils.InputValidator;
+
+    import java.util.Objects;
+
+    public class Contact {
+
+        private String name;
+        private String surname;
+        private String number;
+
+        public Contact() {
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getSurname() {
+            return surname;
+        }
+
+        public void setSurname(String surname) {
+            this.surname = surname;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public void setNumber(String number) {
+            if (!InputValidator.isValidNumber(number)) {
+                System.out.println("Wrong number format!");
+                number = "[no number]";
+            }
+
+            this.number = number;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Contact)) return false;
+            Contact contact = (Contact) o;
+            return Objects.equals(getName(), contact.getName()) && Objects.equals(getSurname(), contact.getSurname()) && Objects.equals(getNumber(), contact.getNumber());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(getName(), getSurname(), getNumber());
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "name='" + name + '\'' +
+                    ", surname='" + surname + '\'' +
+                    ", number='" + number + '\'' +
+                    '}';
+        }
+    }
+  learner_created: true
+- name: src/contacts/domain/Person.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/Gender.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/ContactFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/PersonFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/Organization.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/OrganizationFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/utils/PhoneBookUtils.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/CommandFactory.java
   visible: true
   text: |
     package contacts.menu;
@@ -313,57 +473,13 @@ files:
         }
     }
   learner_created: true
-- name: src/contacts/PhoneBook.java
+- name: src/contacts/PhoneBookBuilder.java
   visible: true
-  text: |
-    package contacts;
-
-    import contacts.action.*;
-    import contacts.menu.PhoneBookMenuOption;
-
-    import java.util.Scanner;
-
-    public class PhoneBook {
-
-        private boolean exit;
-        private final PhoneBookMenuOption menuOption;
-
-        {
-            menuOption = new PhoneBookMenuOption();
-        }
-
-        public void processCommand() {
-            while (!exit) {
-                System.out.print("Enter action (add, remove, edit, count, list, exit): ");
-                Scanner scanner = new Scanner(System.in);
-                String action = scanner.nextLine();
-                switch (action) {
-                    case "add":
-                        new ContactAddCommand(menuOption).execute();
-                        break;
-                    case "remove":
-                        new ContactRemoveCommand(menuOption).execute();
-                        break;
-                    case "edit":
-                        new ContactEditCommand(menuOption).execute();
-                        break;
-                    case "count":
-                        new ContactCountCommand(menuOption).execute();
-                        break;
-                    case "list":
-                        new ContactListCommand(menuOption).execute();
-                        break;
-                    case "exit":
-                        exit = true;
-                        break;
-                    default:
-                        // implement me
-                }
-            }
-        }
-    }
   learner_created: true
-- name: src/contacts/action/ContactEditCommand.java
+- name: src/contacts/service/ContactService.java
+  visible: true
+  learner_created: true
+- name: src/contacts/command/ContactEditCommand.java
   visible: true
   text: |
     package contacts.action;
@@ -384,7 +500,7 @@ files:
         }
     }
   learner_created: true
-- name: src/contacts/action/ContactRemoveCommand.java
+- name: src/contacts/command/ContactRemoveCommand.java
   visible: true
   text: |
     package contacts.action;
@@ -405,26 +521,7 @@ files:
         }
     }
   learner_created: true
-- name: src/contacts/utils/InputValidator.java
-  visible: true
-  text: |
-    package contacts.utils;
-
-    import java.util.List;
-
-    public class InputValidator {
-
-        private static final String PHONE_NUMBER_REGEX = "^\\+?(\\(\\w+\\)|\\w+[ \\-]\\(\\w{2,}\\)|\\w+)([ \\-]\\w{2,})*$";
-        public static boolean isValidNumber(String number) {
-            return number.matches(PHONE_NUMBER_REGEX);
-        }
-
-        public static boolean isValidField(String field) {
-            return field != null && List.of("name", "surname", "number").contains(field);
-        }
-    }
-  learner_created: true
-- name: src/contacts/action/Command.java
+- name: src/contacts/command/Command.java
   visible: true
   text: |
     package contacts.action;
@@ -434,77 +531,7 @@ files:
         void execute();
     }
   learner_created: true
-- name: src/contacts/domain/Contact.java
-  visible: true
-  text: |
-    package contacts.domain;
-
-    import contacts.utils.InputValidator;
-
-    import java.util.Objects;
-
-    public class Contact {
-
-        private String name;
-        private String surname;
-        private String number;
-
-        public Contact() {
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getSurname() {
-            return surname;
-        }
-
-        public void setSurname(String surname) {
-            this.surname = surname;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public void setNumber(String number) {
-            if (!InputValidator.isValidNumber(number)) {
-                System.out.println("Wrong number format!");
-                number = "[no number]";
-            }
-
-            this.number = number;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Contact)) return false;
-            Contact contact = (Contact) o;
-            return Objects.equals(getName(), contact.getName()) && Objects.equals(getSurname(), contact.getSurname()) && Objects.equals(getNumber(), contact.getNumber());
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(getName(), getSurname(), getNumber());
-        }
-
-        @Override
-        public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", surname='" + surname + '\'' +
-                    ", number='" + number + '\'' +
-                    '}';
-        }
-    }
-  learner_created: true
-- name: src/contacts/action/ContactAddCommand.java
+- name: src/contacts/command/ContactAddCommand.java
   visible: true
   text: |
     package contacts.action;
@@ -525,7 +552,7 @@ files:
         }
     }
   learner_created: true
-- name: src/contacts/action/ContactListCommand.java
+- name: src/contacts/command/ContactListCommand.java
   visible: true
   text: |
     package contacts.action;
@@ -546,7 +573,7 @@ files:
         }
     }
   learner_created: true
-- name: src/contacts/action/ContactCountCommand.java
+- name: src/contacts/command/ContactCountCommand.java
   visible: true
   text: |
     package contacts.action;
@@ -567,25 +594,13 @@ files:
         }
     }
   learner_created: true
-- name: src/contacts/domain/Person.java
+- name: src/contacts/command/ContactInfoCommand.java
   visible: true
   learner_created: true
-- name: src/contacts/domain/Gender.java
+- name: src/contacts/command/ContactEditionContext.java
   visible: true
   learner_created: true
-- name: src/contacts/factory/ContactFactory.java
-  visible: true
-  learner_created: true
-- name: src/contacts/factory/PersonFactory.java
-  visible: true
-  learner_created: true
-- name: src/contacts/action/ContactInfoCommand.java
-  visible: true
-  learner_created: true
-- name: src/contacts/domain/Organization.java
-  visible: true
-  learner_created: true
-- name: src/contacts/factory/OrganizationFactory.java
+- name: src/contacts/controller/ContactController.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5326#comment
@@ -593,4 +608,4 @@ status: Solved
 feedback:
   message: Congratulations!
   time: Thu, 22 Dec 2022 09:55:20 UTC
-record: -1
+record: 3

@@ -13,12 +13,24 @@
       <module name="Contacts.Topics-Abstract_factory-Laptop_factory.main" target="11" />
       <module name="Contacts.Topics-Abstract_factory-Phone_factory.main" target="11" />
       <module name="Contacts.Topics-Abstract_factory-Theory.main" target="11" />
+      <module name="Contacts.Topics-Command-line_arguments-Parameters_and_their_values.main" target="11" />
+      <module name="Contacts.Topics-Command-line_arguments-Theory.main" target="11" />
+      <module name="Contacts.Topics-Custom_serialization-The_Range_class.main" target="11" />
+      <module name="Contacts.Topics-Custom_serialization-Theory.main" target="11" />
+      <module name="Contacts.Topics-Declaring_a_method-Calculating_factorials.main" target="11" />
+      <module name="Contacts.Topics-Declaring_a_method-Find_the_max_of_three_numbers.main" target="11" />
+      <module name="Contacts.Topics-Declaring_a_method-The_sign_of_a_number.main" target="11" />
+      <module name="Contacts.Topics-Declaring_a_method-Theory.main" target="11" />
+      <module name="Contacts.Topics-Declaring_a_method-Vowel_or_not.main" target="11" />
       <module name="Contacts.Topics-Enumset-Basic_job_requirements.main" target="11" />
       <module name="Contacts.Topics-Enumset-Theory.main" target="11" />
       <module name="Contacts.Topics-Enumset-Vaccination.main" target="11" />
       <module name="Contacts.Topics-Fields_and_methods_in_enum-Balance_management.main" target="11" />
       <module name="Contacts.Topics-Fields_and_methods_in_enum-System_of_units.main" target="11" />
       <module name="Contacts.Topics-Fields_and_methods_in_enum-Theory.main" target="11" />
+      <module name="Contacts.Topics-Input_streams-Convert_to_bytes.main" target="11" />
+      <module name="Contacts.Topics-Input_streams-Reverse_input_text.main" target="11" />
+      <module name="Contacts.Topics-Input_streams-Theory.main" target="11" />
       <module name="Contacts.util.main" target="11" />
     </bytecodeTargetLevel>
   </component>

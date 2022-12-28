@@ -22,12 +22,24 @@
             <option value="$PROJECT_DIR$/Topics/Abstract factory/Laptop factory" />
             <option value="$PROJECT_DIR$/Topics/Abstract factory/Phone factory" />
             <option value="$PROJECT_DIR$/Topics/Abstract factory/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Command-line arguments/Parameters and their values" />
+            <option value="$PROJECT_DIR$/Topics/Command-line arguments/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Custom serialization/The Range class" />
+            <option value="$PROJECT_DIR$/Topics/Custom serialization/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Declaring a method/Calculating factorials" />
+            <option value="$PROJECT_DIR$/Topics/Declaring a method/Find the max of three numbers" />
+            <option value="$PROJECT_DIR$/Topics/Declaring a method/The sign of a number" />
+            <option value="$PROJECT_DIR$/Topics/Declaring a method/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Declaring a method/Vowel or not" />
             <option value="$PROJECT_DIR$/Topics/Enumset/Basic job requirements" />
             <option value="$PROJECT_DIR$/Topics/Enumset/Theory" />
             <option value="$PROJECT_DIR$/Topics/Enumset/Vaccination" />
             <option value="$PROJECT_DIR$/Topics/Fields and methods in enum/Balance management" />
             <option value="$PROJECT_DIR$/Topics/Fields and methods in enum/System of units" />
             <option value="$PROJECT_DIR$/Topics/Fields and methods in enum/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Input streams/Convert to bytes" />
+            <option value="$PROJECT_DIR$/Topics/Input streams/Reverse input text" />
+            <option value="$PROJECT_DIR$/Topics/Input streams/Theory" />
             <option value="$PROJECT_DIR$/util" />
           </set>
         </option>

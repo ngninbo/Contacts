@@ -18,9 +18,9 @@ public class ContactController implements ContactService {
 
     private static final ContactService controllerInstance = new ContactController();
 
-    public static final List<Contact> contacts;
+    public final List<Contact> contacts;
 
-    static {
+    {
         contacts = new ArrayList<>();
     }
 
@@ -28,6 +28,20 @@ public class ContactController implements ContactService {
 
         return controllerInstance == null ? new ContactController() : controllerInstance;
 
+    }
+
+    @Override
+    public void update(Contact contact) {
+        int contactIndex = contacts.indexOf(contact);
+        if (contactIndex < 0) {
+            return;
+        }
+        contacts.set(contactIndex, contact);
+    }
+
+    @Override
+    public boolean remove(Contact contact) {
+        return contacts.remove(contact);
     }
 
     @Override

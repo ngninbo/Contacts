@@ -17,7 +17,7 @@ public class ContactRemoveCommand implements Command {
     }
 
     public void remove() {
-        boolean deletionSucceed = ContactController.contacts.remove(contact);
+        boolean deletionSucceed = ContactController.getControllerInstance().remove(contact);
         if (deletionSucceed) {
             System.out.println("The record removed!");
         }

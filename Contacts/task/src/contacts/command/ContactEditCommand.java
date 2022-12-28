@@ -20,13 +20,11 @@ public class ContactEditCommand implements Command {
 
     private void edit() {
 
-        int contactIndex = ContactController.contacts.indexOf(contact);
-
         String field = requestInput(String.format("Select a field (%s): ", contact.getEditableFields()));
         if (!field.isEmpty()) {
             String value = requestInput(String.format("Enter %s: ", field));
             contact.setFieldValue(field, value);
-            ContactController.contacts.set(contactIndex, contact);
+            ContactController.getControllerInstance().update(contact);
             System.out.println("Saved");
             contact.info();
         }

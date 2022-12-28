@@ -1,10 +1,10 @@
-package contacts;
+package contacts.builder;
 
+import contacts.domain.PhoneBook;
 import contacts.factory.CommandFactory;
 
 public class PhoneBookBuilder {
     private CommandFactory commandFactory;
-    private String filename;
 
     private PhoneBookBuilder() {
     }

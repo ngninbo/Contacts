@@ -31,6 +31,8 @@
       <module name="Contacts.Topics-Input_streams-Convert_to_bytes.main" target="11" />
       <module name="Contacts.Topics-Input_streams-Reverse_input_text.main" target="11" />
       <module name="Contacts.Topics-Input_streams-Theory.main" target="11" />
+      <module name="Contacts.Topics-ThreadLocal-Finish_a_method.main" target="11" />
+      <module name="Contacts.Topics-ThreadLocal-Theory.main" target="11" />
       <module name="Contacts.util.main" target="11" />
     </bytecodeTargetLevel>
   </component>

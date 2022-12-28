@@ -1,5 +1,6 @@
 package contacts;
 
+import contacts.builder.PhoneBookBuilder;
 import contacts.factory.CommandFactory;
 
 public class Main {

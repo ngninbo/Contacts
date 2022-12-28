@@ -6,3 +6,4 @@ content:
 - Command-line arguments
 - Input streams
 - Custom serialization
+- ThreadLocal

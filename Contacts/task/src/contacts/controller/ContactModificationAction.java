@@ -40,15 +40,16 @@ public class ContactModificationAction implements Command {
             while (!"menu".equals(action)) {
                 action = requestInput("\n[record] Enter action (edit, delete, menu): ");
 
-                switch (action) {
-                    case "edit":
-                        new ContactEditCommand(contact).execute();
-                        break;
-                    case "delete":
-                        new ContactRemoveCommand(contact).execute();
-                        break;
-                    case "menu":
-                    default:
+                Command command = null;
+
+                if ("edit".equals(action)) {
+                    command = new ContactEditCommand(contact);
+                } else if ("delete".equals(action)) {
+                    command = new ContactRemoveCommand(contact);
+                }
+
+                if (command != null) {
+                    command.execute();
                 }
             }
         }

@@ -1,8 +1,7 @@
 package contacts.controller;
 
 import contacts.domain.Contact;
-import contacts.factory.OrganizationFactory;
-import contacts.factory.PersonFactory;
+import contacts.builder.ContactCreator;
 import contacts.service.ContactService;
 import contacts.utils.PhoneBookUtils;
 
@@ -33,14 +32,9 @@ public class ContactController implements ContactService {
 
     @Override
     public void add() {
-        Contact contact = null;
         String type = requestInput("Enter the type (person, organization): ");
 
-        if ("person".equals(type)) {
-            contact = new PersonFactory().createContact();
-        } else if ("organization".equals(type)) {
-            contact = new OrganizationFactory().createContact();
-        }
+        Contact contact = new ContactCreator().setType(type).createContact();
 
         if (contact != null) {
             contacts.add(contact);
@@ -51,17 +45,6 @@ public class ContactController implements ContactService {
     @Override
     public void count() {
         System.out.printf("The Phone Book has %s records.\n", contacts.size());
-    }
-
-    @Override
-    public void info() {
-        PhoneBookUtils.list(contacts);
-        int index = Integer.parseInt(requestInput("Enter index to show info: ")) - 1;
-        if (index < 0 || index > contacts.size()) {
-            return;
-        }
-
-        contacts.get(index).info();
     }
 
     @Override

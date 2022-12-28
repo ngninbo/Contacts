@@ -1,14 +1,14 @@
-package contacts.factory;
+package contacts.builder;
 
 import contacts.domain.Contact;
 import contacts.domain.Organization;
 
 import static contacts.utils.PhoneBookUtils.requestInput;
 
-public class OrganizationFactory implements ContactFactory {
+public class OrganizationBuilder implements ContactBuilder {
 
     @Override
-    public Contact createContact() {
+    public Contact create() {
         Organization organization = new Organization();
         organization.setOrganizationName(requestInput("Enter the organization name: "));
         organization.setAddress(requestInput("Enter the address: "));

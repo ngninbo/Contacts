@@ -40,6 +40,8 @@
             <option value="$PROJECT_DIR$/Topics/Input streams/Convert to bytes" />
             <option value="$PROJECT_DIR$/Topics/Input streams/Reverse input text" />
             <option value="$PROJECT_DIR$/Topics/Input streams/Theory" />
+            <option value="$PROJECT_DIR$/Topics/ThreadLocal/Finish a method" />
+            <option value="$PROJECT_DIR$/Topics/ThreadLocal/Theory" />
             <option value="$PROJECT_DIR$/util" />
           </set>
         </option>

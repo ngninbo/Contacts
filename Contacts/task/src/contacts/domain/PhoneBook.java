@@ -1,4 +1,4 @@
-package contacts;
+package contacts.domain;
 
 import contacts.command.Command;
 import contacts.factory.CommandFactory;

@@ -28,18 +28,6 @@ public abstract class Contact {
         this.number = number;
     }
 
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public LocalDateTime getLastEditTime() {
-        return lastEditTime;
-    }
-
     public void setLastEditTime(LocalDateTime lastEditTime) {
         this.lastEditTime = lastEditTime;
     }

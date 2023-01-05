@@ -1,6 +1,7 @@
 package contacts.domain;
 
 import contacts.command.Command;
+import contacts.controller.ContactController;
 import contacts.factory.CommandFactory;
 import contacts.utils.PhoneBookUtils;
 
@@ -22,5 +23,10 @@ public class PhoneBook {
             }
             System.out.println();
         }
+    }
+
+    public PhoneBook load(String filename) {
+        ContactController.getControllerInstance().load(filename);
+        return this;
     }
 }

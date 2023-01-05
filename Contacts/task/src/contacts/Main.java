@@ -8,9 +8,9 @@ public class Main {
     public static void main(String[] args) {
         PhoneBookBuilder
                 .init()
-                .load(args[1])
                 .withCommandFactory(new CommandFactory())
                 .build()
+                .load(args[1])
                 .processCommand();
     }
 }

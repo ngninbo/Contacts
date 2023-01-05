@@ -15,6 +15,8 @@ public class CommandFactory {
                 return new ContactSearchCommand();
             case "count":
                 return new ContactCountCommand();
+            case "exit":
+                return new ExitCommand();
             default:
         }
 

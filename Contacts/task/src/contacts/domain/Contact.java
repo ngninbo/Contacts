@@ -2,10 +2,12 @@ package contacts.domain;
 
 import contacts.utils.InputValidator;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class Contact {
+public abstract class Contact implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     protected String number;
     protected LocalDateTime createdTime;
     protected LocalDateTime lastEditTime;

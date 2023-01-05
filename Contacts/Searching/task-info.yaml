@@ -220,21 +220,6 @@ files:
         }
     }
   learner_created: true
-- name: src/contacts/command/ContactInfoCommand.java
-  visible: true
-  text: |
-    package contacts.command;
-
-    import contacts.controller.ContactController;
-
-    public class ContactInfoCommand implements Command {
-
-        @Override
-        public void execute() {
-            ContactController.getControllerInstance().info();
-        }
-    }
-  learner_created: true
 - name: src/contacts/factory/ContactFactory.java
   visible: true
   text: |
@@ -725,12 +710,6 @@ files:
 - name: src/contacts/command/ContactSearchCommand.java
   visible: true
   learner_created: true
-- name: src/contacts/repository/ContactRepository.java
-  visible: true
-  learner_created: true
-- name: src/contacts/repository/BaseRepository.java
-  visible: true
-  learner_created: true
 - name: src/contacts/command/ContactModificationCommand.java
   visible: true
   learner_created: true
@@ -909,6 +888,12 @@ files:
             }
         }
     }
+  learner_created: true
+- name: src/contacts/domain/ContactList.java
+  visible: true
+  learner_created: true
+- name: src/contacts/command/ExitCommand.java
+  visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5327#comment
 status: Solved

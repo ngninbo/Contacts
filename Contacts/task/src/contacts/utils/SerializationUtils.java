@@ -9,11 +9,11 @@ public class SerializationUtils {
     /**
      * Serialize the given object to the file
      */
-    public static void serialize(Object obj, String fileName) throws IOException {
+    public static void serialize(Contact[] contacts, String fileName) throws IOException {
         FileOutputStream fos = new FileOutputStream(fileName);
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(obj);
+        oos.writeObject(contacts);
         oos.close();
     }
 

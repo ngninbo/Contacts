@@ -7,6 +7,7 @@ import contacts.utils.PhoneBookUtils;
 import contacts.utils.SerializationUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -17,9 +18,9 @@ import static contacts.utils.PhoneBookUtils.requestInput;
 public class ContactList implements ContactService<Contact> {
 
     public List<Contact> contacts;
+    private String filename;
 
-    public ContactList(List<Contact> contacts) {
-        this.contacts = contacts;
+    public ContactList() {
     }
 
     @Override
@@ -100,8 +101,21 @@ public class ContactList implements ContactService<Contact> {
     @Override
     public void save() {
         try {
-            SerializationUtils.serialize((contacts.toArray(new Contact[0])), "phonebook.db");
+            SerializationUtils.serialize((contacts.toArray(new Contact[0])), filename);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void load(String filename) {
+        this.filename = filename;
+        System.out.printf("open %s\n", filename);
+        final Contact[] contacts;
+        try {
+            contacts = SerializationUtils.deserialize(filename);
+            this.contacts = Arrays.stream(contacts).collect(Collectors.toList());
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

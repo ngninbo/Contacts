@@ -2,27 +2,17 @@ package contacts.controller;
 
 import contacts.domain.Contact;
 import contacts.domain.ContactList;
-import contacts.utils.SerializationUtils;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ContactController {
 
     private static final ContactController controllerInstance = new ContactController();
-    private final ContactList contactList;
+    private final ContactList contactList = new ContactList();
 
-    public ContactController() {
-        this.contactList = new ContactList(load());
+    private ContactController() {
     }
 
     public static ContactController getControllerInstance() {
-
         return controllerInstance == null ? new ContactController() : controllerInstance;
-
     }
 
     public void update(Contact contact) {
@@ -49,15 +39,8 @@ public class ContactController {
         contactList.list();
     }
 
-    private List<Contact> load() {
-        final Contact[] contacts;
-        try {
-            contacts = SerializationUtils.deserialize("phonebook.db");
-            return Arrays.stream(contacts).collect(Collectors.toList());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return new LinkedList<>();
-        }
+    public void load(String filename) {
+       contactList.load(filename);
     }
 
     public void save() {

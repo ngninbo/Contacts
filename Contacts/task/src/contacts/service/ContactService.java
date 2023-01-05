@@ -12,4 +12,6 @@ public interface ContactService<T extends Contact> {
     boolean remove(T contact);
 
     void save();
+
+    void load(String filename);
 }

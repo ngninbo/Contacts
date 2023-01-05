@@ -14,7 +14,6 @@ public class PhoneBook {
     }
 
     public void processCommand() {
-        System.out.println("open phonebook.db");
         while (!"exit".equals(action)) {
             action = PhoneBookUtils.requestInput("[menu] Enter action (add, list, search, count, exit): ");
             Command command = commandFactory.getCommand(action);

@@ -5,6 +5,7 @@ import contacts.model.Contact;
 import contacts.utils.PhoneBookUtils;
 import contacts.utils.SerializationUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,11 +132,16 @@ public class ContactList implements PhoneBookOption {
         this.filename = filename;
         System.out.printf("open %s\n", filename);
         final Contact[] contacts;
-        try {
-            contacts = SerializationUtils.deserialize(filename);
-            this.contacts = Arrays.stream(contacts).collect(Collectors.toList());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        File file = new File(filename);
+
+        if (file.exists()) {
+            try {
+                contacts = SerializationUtils.deserialize(filename);
+                this.contacts = Arrays.stream(contacts).collect(Collectors.toList());
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
             this.contacts = new ArrayList<>();
         }
     }

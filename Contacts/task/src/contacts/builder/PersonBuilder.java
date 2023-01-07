@@ -1,7 +1,7 @@
 package contacts.builder;
 
-import contacts.domain.Contact;
-import contacts.domain.Person;
+import contacts.model.Contact;
+import contacts.model.Person;
 
 import static contacts.utils.PhoneBookUtils.requestInput;
 

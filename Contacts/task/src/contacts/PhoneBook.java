@@ -1,26 +1,23 @@
-package contacts.domain;
+package contacts;
 
-import contacts.command.Command;
 import contacts.controller.ContactController;
-import contacts.factory.CommandFactory;
+import contacts.factory.Menu;
 import contacts.utils.PhoneBookUtils;
 
 public class PhoneBook {
 
-    private final CommandFactory commandFactory;
     private String action;
+    private final Menu menu;
 
-    public PhoneBook(CommandFactory commandFactory) {
-        this.commandFactory = commandFactory;
+    public PhoneBook(Menu menu) {
+        this.menu = menu;
     }
 
     public void processCommand() {
         while (!"exit".equals(action)) {
             action = PhoneBookUtils.requestInput("[menu] Enter action (add, list, search, count, exit): ");
-            Command command = commandFactory.getCommand(action);
-            if (command != null) {
-                command.execute();
-            }
+            menu.setCommand(action);
+            menu.execute();
             System.out.println();
         }
     }

@@ -1,6 +1,6 @@
 package contacts.utils;
 
-import contacts.domain.Contact;
+import contacts.model.Contact;
 
 import java.io.*;
 

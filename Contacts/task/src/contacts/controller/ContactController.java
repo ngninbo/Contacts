@@ -1,49 +1,46 @@
 package contacts.controller;
 
-import contacts.domain.Contact;
-import contacts.domain.ContactList;
+import contacts.model.Contact;
+import contacts.core.ContactList;
+import contacts.core.PhoneBookOption;
 
 public class ContactController {
 
     private static final ContactController controllerInstance = new ContactController();
-    private final ContactList contactList = new ContactList();
+    private final PhoneBookOption option = new ContactList();
 
     private ContactController() {
     }
 
     public static ContactController getControllerInstance() {
-        return controllerInstance == null ? new ContactController() : controllerInstance;
+        return controllerInstance;
     }
 
     public void update(Contact contact) {
-        contactList.update(contact);
-    }
-
-    public boolean remove(Contact contact) {
-        return contactList.remove(contact);
+        option.update(contact);
     }
 
     public void add() {
-        contactList.add();
+        option.add();
     }
 
     public void count() {
-        contactList.count();
+        option.count();
     }
 
     public void search() {
-        contactList.search();
+        option.search();
     }
 
     public void list() {
-        contactList.list();
+        option.list();
     }
 
     public void load(String filename) {
-       contactList.load(filename);
+       option.load(filename);
     }
 
     public void save() {
-        contactList.save();
+        option.save();
     }
 }

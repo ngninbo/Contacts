@@ -1,6 +1,6 @@
 package contacts.factory;
 
-import contacts.domain.Contact;
+import contacts.model.Contact;
 
 public interface ContactFactory {
 

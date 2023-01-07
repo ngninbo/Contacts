@@ -1,23 +1,22 @@
-package contacts.domain;
+package contacts.core;
 
-import contacts.builder.ContactCreator;
-import contacts.controller.ContactModificationAction;
-import contacts.service.ContactService;
+import contacts.factory.ContactCreator;
+import contacts.model.Contact;
 import contacts.utils.PhoneBookUtils;
 import contacts.utils.SerializationUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static contacts.utils.PhoneBookUtils.requestInput;
 
-public class ContactList implements ContactService<Contact> {
+public class ContactList implements PhoneBookOption {
 
-    public List<Contact> contacts;
+    private List<Contact> contacts;
     private String filename;
 
     public ContactList() {
@@ -38,10 +37,21 @@ public class ContactList implements ContactService<Contact> {
     }
 
     @Override
+    public void edit(Contact contact) {
+        String field = requestInput(String.format("Select a field (%s): ", contact.getEditableFields()));
+        if (!field.isEmpty()) {
+            String value = requestInput(String.format("Enter %s: ", field));
+            contact.setFieldValue(field, value);
+            update(contact);
+            System.out.println("Saved");
+            contact.info();
+        }
+    }
+
+    @Override
     public void add() {
         String type = requestInput("Enter the type (person, organization): ");
-
-        Contact contact = new ContactCreator().setType(type).createContact();
+        Contact contact = ContactCreator.of(type);
 
         if (contact != null) {
             contacts.add(contact);
@@ -57,9 +67,8 @@ public class ContactList implements ContactService<Contact> {
     @Override
     public void search() {
         String query = requestInput("Enter search query: ");
-        final String regex = String.format(".*%s.*", query);
         List<Contact> contactItems = contacts.stream()
-                .filter(contact -> match(contact.appendFieldValues(), regex))
+                .filter(contact -> contact.match(query))
                 .sorted(Comparator.comparing(Contact::getFullName))
                 .collect(Collectors.toList());
         System.out.printf("Found %s results:\n", contactItems.size());
@@ -73,8 +82,14 @@ public class ContactList implements ContactService<Contact> {
 
         if ("again".equals(action)) {
             search();
-        } else {
-            new ContactModificationAction(contactItems).setAction(action).execute();
+        } else if (action.matches("\\d")){
+            int number = Integer.parseInt(action) - 1;
+
+            if (number < 0 || number >= contactItems.size()) {
+                return;
+            }
+
+            new Record(contactItems.get(number)).modify();
         }
     }
 
@@ -89,13 +104,16 @@ public class ContactList implements ContactService<Contact> {
         PhoneBookUtils.list(contacts);
 
         String action = requestInput("\n[list] Enter action ([number], back): ");
-        new ContactModificationAction(contacts).setAction(action).execute();
-    }
 
-    private boolean match(String name, String regex) {
-        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
-                .matcher(name)
-                .matches();
+        if (action.matches("\\d")) {
+            int number = Integer.parseInt(action) - 1;
+
+            if (number < 0 || number >= contacts.size()) {
+                return;
+            }
+
+            new Record(contacts.get(number)).modify();
+        }
     }
 
     @Override
@@ -108,6 +126,7 @@ public class ContactList implements ContactService<Contact> {
     }
 
 
+    @Override
     public void load(String filename) {
         this.filename = filename;
         System.out.printf("open %s\n", filename);
@@ -117,6 +136,39 @@ public class ContactList implements ContactService<Contact> {
             this.contacts = Arrays.stream(contacts).collect(Collectors.toList());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            this.contacts = new ArrayList<>();
+        }
+    }
+
+    class Record {
+
+        private final Contact contact;
+
+        public Record(Contact contact) {
+            this.contact = contact;
+        }
+
+        public void modify() {
+            contact.info();
+
+            String action = null;
+
+            while (!"menu".equals(action)) {
+                action = requestInput("\n[record] Enter action (edit, delete, menu): ");
+
+                switch (action) {
+                    case "edit":
+                        edit(contact);
+                        break;
+                    case "delete":
+                        boolean deletionSucceed = remove(contact);
+                        if (deletionSucceed) {
+                            System.out.println("The record removed!");
+                        }
+                        break;
+                    default:
+                }
+            }
         }
     }
 }

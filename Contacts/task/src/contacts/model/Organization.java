@@ -1,4 +1,4 @@
-package contacts.domain;
+package contacts.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

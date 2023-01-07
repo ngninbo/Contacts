@@ -1,6 +1,6 @@
 package contacts.builder;
 
-import contacts.domain.Contact;
+import contacts.model.Contact;
 
 public interface ContactBuilder {
 

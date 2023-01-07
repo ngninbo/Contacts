@@ -1,10 +1,11 @@
 package contacts.builder;
 
-import contacts.domain.PhoneBook;
-import contacts.factory.CommandFactory;
+import contacts.PhoneBook;
+import contacts.factory.Menu;
 
 public class PhoneBookBuilder {
-    private CommandFactory commandFactory;
+
+    private Menu menu;
 
     private PhoneBookBuilder() {
     }
@@ -13,12 +14,12 @@ public class PhoneBookBuilder {
         return new PhoneBookBuilder();
     }
 
-    public PhoneBookBuilder withCommandFactory(CommandFactory commandFactory) {
-        this.commandFactory = commandFactory;
+    public PhoneBookBuilder withMenu(Menu menu) {
+        this.menu = menu;
         return this;
     }
 
     public PhoneBook build() {
-        return new PhoneBook(commandFactory);
+        return new PhoneBook(menu);
     }
 }

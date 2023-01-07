@@ -1,14 +1,13 @@
 package contacts;
 
 import contacts.builder.PhoneBookBuilder;
-import contacts.factory.CommandFactory;
+import contacts.factory.Menu;
 
 public class Main {
 
     public static void main(String[] args) {
-        PhoneBookBuilder
-                .init()
-                .withCommandFactory(new CommandFactory())
+        PhoneBookBuilder.init()
+                .withMenu(new Menu())
                 .build()
                 .load(args[1])
                 .processCommand();

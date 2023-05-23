@@ -1,10 +1,11 @@
 package contacts.model;
 
-import contacts.utils.InputValidator;
+import contacts.domain.ContactField;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Contact implements Serializable {
 
@@ -23,11 +24,6 @@ public abstract class Contact implements Serializable {
     }
 
     public void setNumber(String number) {
-        if (!InputValidator.isValidNumber(number)) {
-            System.out.println("Wrong number format!");
-            number = "[no number]";
-        }
-
         this.number = number;
     }
 
@@ -40,14 +36,14 @@ public abstract class Contact implements Serializable {
     public abstract String getFullName();
 
     public abstract String getEditableFields();
-    public abstract void setFieldValue(String field, String value);
+
+    public abstract void setFieldValue(ContactField field, String value);
 
     public abstract String appendFieldValues();
 
-    public boolean match(String query) {
-        final String regex = String.format(".*%s.*", query);
-        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
-                .matcher(appendFieldValues())
-                .matches();
+    public String stringify(ContactField... fields) {
+        return Stream.of(fields).map(Enum::name)
+                .map(String::toLowerCase)
+                .collect(Collectors.joining(", "));
     }
 }

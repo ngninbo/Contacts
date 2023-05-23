@@ -1,5 +1,7 @@
 package contacts.model;
 
+import contacts.domain.ContactField;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -31,10 +33,6 @@ public class Person extends Contact {
     }
 
     public void setBirthdate(String birthdate) {
-        if (!birthdate.matches("^\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$")) {
-            System.out.println("Bad birth date!");
-            birthdate = "[no data]";
-        }
         this.birthdate = birthdate;
     }
 
@@ -43,12 +41,6 @@ public class Person extends Contact {
     }
 
     public void setGender(String gender) {
-
-        if (!gender.matches("[FM]")) {
-            System.out.println("Bad gender!");
-            gender = "[no data]";
-        }
-
         this.gender = gender;
     }
 
@@ -86,32 +78,32 @@ public class Person extends Contact {
 
     @Override
     public String getFullName() {
-        return String.format("%s %s", name, surname);
+        return String.join(" ", name, surname);
     }
 
     @Override
     public String getEditableFields() {
-        return "name, surname, birth, gender, number";
+        return stringify(ContactField.NAME, ContactField.SURNAME, ContactField.BIRTH, ContactField.GENDER, ContactField.NUMBER);
     }
 
     @Override
-    public void setFieldValue(String field, String value) {
+    public void setFieldValue(ContactField field, String value) {
         switch (field) {
-            case "name":
+            case NAME:
                 setName(value);
                 break;
-            case "surname":
+            case SURNAME:
                 setSurname(value);
                 break;
-            case "birth":
+            case BIRTH:
                 setBirthdate(value);
                 break;
-            case "gender":
+            case GENDER:
                 setGender(value);
                 break;
-            case "number":
-               setNumber(value);
-               break;
+            case NUMBER:
+                setNumber(value);
+                break;
             default:
         }
 
@@ -120,6 +112,6 @@ public class Person extends Contact {
 
     @Override
     public String appendFieldValues() {
-        return getFullName() + " " + getBirthdate() + " " + getGender() + " " + getNumber();
+        return String.join(" ", getFullName(), getBirthdate(), getGender(), getNumber());
     }
 }

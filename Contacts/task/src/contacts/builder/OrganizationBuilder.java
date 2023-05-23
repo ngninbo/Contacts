@@ -3,16 +3,37 @@ package contacts.builder;
 import contacts.model.Contact;
 import contacts.model.Organization;
 
-import static contacts.utils.PhoneBookUtils.requestInput;
+import static contacts.utils.PhoneBookUtils.*;
 
-public class OrganizationBuilder implements ContactBuilder {
+public class OrganizationBuilder extends ContactBuilder {
+
+    private Organization organization;
+
+    @Override
+    public void init() {
+       organization = new Organization();
+    }
+
+    @Override
+    public void setName() {
+        organization.setOrganizationName(requestOrganisationName());
+    }
+
+    @Override
+    public void setNumber() {
+        organization.setNumber(validate(requestNumberInput()));
+    }
+
+    public void setAddress() {
+        organization.setAddress(requestAddressInput());
+    }
 
     @Override
     public Contact create() {
-        Organization organization = new Organization();
-        organization.setOrganizationName(requestInput("Enter the organization name: "));
-        organization.setAddress(requestInput("Enter the address: "));
-        organization.setNumber(requestInput("Enter the number: "));
+        init();
+        setName();
+        setAddress();
+        setNumber();
         return organization;
     }
 }

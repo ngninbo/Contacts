@@ -1,11 +1,9 @@
 package contacts.command;
 
-import contacts.controller.ContactController;
-
-public class ContactCountCommand implements Command {
+public class ContactCountCommand extends Command {
 
     @Override
     public void execute() {
-        ContactController.getControllerInstance().count();
+        print("phone.book.record.size.msg", contactList.count());
     }
 }

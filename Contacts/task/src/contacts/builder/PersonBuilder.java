@@ -1,20 +1,64 @@
 package contacts.builder;
 
 import contacts.model.Contact;
+import contacts.domain.Gender;
 import contacts.model.Person;
+import contacts.utils.InputValidator;
 
-import static contacts.utils.PhoneBookUtils.requestInput;
+import static contacts.utils.PhoneBookUtils.*;
 
-public class PersonBuilder implements ContactBuilder {
+public class PersonBuilder extends ContactBuilder {
+
+    private Person person;
+
+    @Override
+    public void init() {
+        person = new Person();
+    }
+
+    @Override
+    public void setName() {
+        person.setName(requestNameInput());
+    }
+
+    @Override
+    public void setNumber() {
+        person.setNumber(validate(requestNumberInput()));
+    }
+
+    public void setSurname() {
+        person.setSurname(requestSurnameInput());
+    }
+
+    public void setBirthdate() {
+        String birthdate = requestBirthdateInput();
+        if (!InputValidator.isValidBirthDate(birthdate)) {
+            System.out.println(resourcesBundle.get("birthdate.validation.error"));
+            birthdate = resourcesBundle.get("missing.value.msg");
+        }
+
+        person.setBirthdate(birthdate);
+    }
+
+    public void setGender() {
+        String gender = requestGenderInput();
+
+        if (!InputValidator.isValidGender(gender)) {
+            System.out.println(resourcesBundle.get("gender.validation.error"));
+            gender = resourcesBundle.get("missing.value.msg");
+        }
+
+        person.setGender(gender);
+    }
 
     @Override
     public Contact create() {
-        Person person = new Person();
-        person.setName(requestInput("Enter the name: "));
-        person.setSurname(requestInput("Enter the surname: "));
-        person.setBirthdate(requestInput("Enter the birth date: "));
-        person.setGender(requestInput("Enter the gender (M, F): "));
-        person.setNumber(requestInput("Enter the number: "));
+        init();
+        setName();
+        setSurname();
+        setBirthdate();
+        setGender();
+        setNumber();
         return person;
     }
 }

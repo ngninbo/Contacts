@@ -1,8 +1,13 @@
 package contacts.factory;
 
+import contacts.builder.ContactBuilder;
 import contacts.model.Contact;
+import contacts.domain.ContactType;
 
-public interface ContactFactory {
+public class ContactFactory {
 
-    Contact createContact();
+    public static Contact createContact(ContactType type) {
+        ContactBuilder contactBuilder = ContactBuilderFactory.getContactBuilder(type);
+        return contactBuilder != null ? contactBuilder.create() : null;
+    }
 }

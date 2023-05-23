@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/204791/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Sat, 07 Jan 2023 15:01:52 UTC
+update_date: Tue, 23 May 2023 12:06:27 UTC
 stages:
 - id: 228
   step: 5324
@@ -23,22 +23,36 @@ topics:
     theory_id: 3739
   - title: JVM, JRE, and JDK
     theory_id: 3499
-  - title: Units of information
-    theory_id: 6865
-  - title: IDE
-    theory_id: 10996
-  - title: Introduction to Operating systems
-    theory_id: 9704
   - title: Computer algorithms
     theory_id: 16547
-  - title: Immutability
-    theory_id: 7929
   - title: The big O notation
     theory_id: 16699
   - title: Best, average and worst cases
     theory_id: 20084
   - title: Data structures
     theory_id: 16927
+  - title: Units of information
+    theory_id: 6865
+  - title: IDE
+    theory_id: 10996
+  - title: Introduction to Operating systems
+    theory_id: 9704
+  - title: Command line overview
+    theory_id: 8977
+  - title: Parameters and Options
+    theory_id: 9746
+  - title: Pseudocode
+    theory_id: 15090
+  - title: Pseudocode basics
+    theory_id: 19510
+  - title: Complex constructions in pseudocode
+    theory_id: 20922
+  - title: Immutability
+    theory_id: 7929
+  - title: Fixed-size array
+    theory_id: 20078
+  - title: Dynamic array
+    theory_id: 5357
   - title: Computer programming
     theory_id: 8739
   - title: Paradigms
@@ -123,29 +137,15 @@ topics:
     theory_id: 3621
   - title: Hierarchy of exceptions
     theory_id: 3570
-  - title: Command line overview
-    theory_id: 8977
-  - title: Parameters and Options
-    theory_id: 9746
   - title: Running programs on your computer
     theory_id: 3746
-  - title: Pseudocode
-    theory_id: 15090
-  - title: Pseudocode basics
-    theory_id: 19510
-  - title: Complex constructions in pseudocode
-    theory_id: 20922
-  - title: Fixed-size array
-    theory_id: 20078
-  - title: Dynamic array
-    theory_id: 5357
   - title: What is a bug
     theory_id: 5504
   - title: IntelliJ IDEA
     theory_id: 3801
-  - title: IntelliJ Run Configurations
+  - title: IntelliJ IDEA run configurations
     theory_id: 10630
-  - title: IDEA Basics
+  - title: IntelliJ IDEA basics
     theory_id: 5819
   - title: EduTools
     theory_id: 5839
@@ -233,10 +233,10 @@ topics:
     theory_id: 8963
   - title: Class Diagrams
     theory_id: 15588
-  - title: LocalTime
-    theory_id: 3593
   - title: LocalDate
     theory_id: 3592
+  - title: LocalTime
+    theory_id: 3593
   - title: LocalDateTime
     theory_id: 3617
   - title: Generics and Object
@@ -251,14 +251,14 @@ topics:
     theory_id: 19793
   - title: Encapsulating object creation
     theory_id: 3577
-  - title: Factory method
-    theory_id: 5761
   - title: Command
     theory_id: 7762
   - title: Template method
     theory_id: 5155
   - title: Factory Method and Prototype
     theory_id: 16430
+  - title: Factory method
+    theory_id: 5761
   - title: Abstract factory
     theory_id: 17108
   - title: Abstract factory

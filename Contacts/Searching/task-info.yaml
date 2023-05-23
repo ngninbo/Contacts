@@ -257,117 +257,6 @@ files:
         void execute();
     }
   learner_created: true
-- name: src/contacts/controller/ContactController.java
-  visible: true
-  text: |
-    package contacts.controller;
-
-    import contacts.command.ContactEditionContext;
-    import contacts.domain.Contact;
-    import contacts.factory.OrganizationFactory;
-    import contacts.factory.PersonFactory;
-    import contacts.service.ContactService;
-
-    import java.util.ArrayList;
-    import java.util.List;
-    import java.util.stream.IntStream;
-
-    import static contacts.utils.PhoneBookUtils.requestInput;
-
-    public class ContactController implements ContactService {
-
-        private static final ContactService controllerInstance = new ContactController();
-
-        private final List<Contact> contacts;
-
-        {
-            contacts = new ArrayList<>();
-        }
-
-        public static ContactService getControllerInstance() {
-
-            return controllerInstance == null ? new ContactController() : controllerInstance;
-
-        }
-
-        @Override
-        public void add() {
-            Contact contact = null;
-            String type = requestInput("Enter the type (person, organization): ");
-
-            switch (type) {
-                case "person":
-                    contact = new PersonFactory().createContact();
-                    break;
-                case "organization":
-                    contact = new OrganizationFactory().createContact();
-                    break;
-            }
-
-            if (contact != null) {
-                contacts.add(contact);
-                System.out.println("The record added.");
-            }
-        }
-
-        @Override
-        public void edit() {
-            if (contacts.isEmpty()) {
-                System.out.println("No records to edit!");
-            } else {
-
-                list();
-                int record = Integer.parseInt(requestInput("Select a record: "));
-
-                if (record < 0  || record > contacts.size()) {
-                    return;
-                }
-
-                final int index = record - 1;
-
-                contacts.set(index, new ContactEditionContext(contacts.get(index)).edit());
-
-                System.out.println("The record updated!");
-            }
-        }
-
-        @Override
-        public void remove() {
-            if (contacts.isEmpty()) {
-                System.out.println("No records to remove!");
-            } else {
-                list();
-                int choice = Integer.parseInt(requestInput("Select a record: "));
-                Contact contact = contacts.remove(choice - 1);
-                if (contact != null) {
-                    System.out.println("The record removed!");
-                }
-            }
-        }
-
-        @Override
-        public void count() {
-            System.out.printf("The Phone Book has %s records.\n", contacts.size());
-        }
-
-        @Override
-        public void info() {
-            list();
-            int index = Integer.parseInt(requestInput("Enter index to show info: ")) - 1;
-            if (index < 0 || index > contacts.size()) {
-                return;
-            }
-
-            contacts.get(index).info();
-        }
-
-        @Override
-        public void list() {
-            IntStream.range(0, contacts.size())
-                    .forEach(i -> System.out.printf("%s. %s\n", i + 1, contacts.get(i).getFullName()));
-        }
-    }
-  learner_created: true
 - name: src/contacts/command/ContactListCommand.java
   visible: true
   text: |
@@ -536,65 +425,6 @@ files:
   learner_created: true
 - name: src/contacts/builder/ContactBuilder.java
   visible: true
-  learner_created: true
-- name: src/contacts/builder/PhoneBookBuilder.java
-  visible: true
-  text: |-
-    package contacts;
-
-    import contacts.factory.CommandFactory;
-
-    public class PhoneBookBuilder {
-        private CommandFactory commandFactory;
-
-        private PhoneBookBuilder() {
-        }
-
-        public static PhoneBookBuilder init() {
-            return new PhoneBookBuilder();
-        }
-
-        public PhoneBookBuilder withCommandFactory(CommandFactory commandFactory) {
-            this.commandFactory = commandFactory;
-            return this;
-        }
-
-        public PhoneBook build() {
-            return new PhoneBook(commandFactory);
-        }
-    }
-  learner_created: true
-- name: src/contacts/command/ExitCommand.java
-  visible: true
-  learner_created: true
-- name: src/contacts/factory/Menu.java
-  visible: true
-  text: |
-    package contacts.factory;
-
-    import contacts.command.*;
-
-    public class CommandFactory {
-
-        public Command getCommand(String action) {
-
-            switch (action) {
-                case "add":
-                    return new ContactAddCommand();
-                case "remove":
-                    return new ContactRemoveCommand();
-                case "edit":
-                    return new ContactEditCommand();
-                case "count":
-                    return new ContactCountCommand();
-                case "info":
-                    return new ContactInfoCommand();
-                default:
-            }
-
-            return null;
-        }
-    }
   learner_created: true
 - name: src/contacts/PhoneBook.java
   visible: true
@@ -839,9 +669,6 @@ files:
 - name: src/contacts/core/ContactList.java
   visible: true
   learner_created: true
-- name: src/contacts/core/PhoneBookOption.java
-  visible: true
-  learner_created: true
 - name: src/contacts/core/ContactService.java
   visible: true
   text: |
@@ -858,7 +685,75 @@ files:
         void list();
     }
   learner_created: true
-- name: src/contacts/factory/ContactCreator.java
+- name: src/contacts/command/ContactEditCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/command/ContactUpdateCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/core/ContactLoader.java
+  visible: true
+  learner_created: true
+- name: src/contacts/command/ContactDeleteCommand.java
+  visible: true
+  learner_created: true
+- name: src/main/resources/messages.properties
+  visible: true
+  learner_created: true
+- name: src/contacts/utils/MessageResourcesBundle.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/ContactBuilderFactory.java
+  visible: true
+  learner_created: true
+- name: src/main/resources/pattern.properties
+  visible: true
+  learner_created: true
+- name: src/contacts/command/PhoneBookExitCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/CommandFactory.java
+  visible: true
+  text: |
+    package contacts.factory;
+
+    import contacts.command.*;
+
+    public class CommandFactory {
+
+        public Command getCommand(String action) {
+
+            switch (action) {
+                case "add":
+                    return new ContactAddCommand();
+                case "remove":
+                    return new ContactRemoveCommand();
+                case "edit":
+                    return new ContactEditCommand();
+                case "count":
+                    return new ContactCountCommand();
+                case "info":
+                    return new ContactInfoCommand();
+                default:
+            }
+
+            return null;
+        }
+    }
+  learner_created: true
+- name: src/contacts/domain/MenuAction.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/ContactUpdateAction.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/Gender.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/ContactType.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/ContactField.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5327#comment

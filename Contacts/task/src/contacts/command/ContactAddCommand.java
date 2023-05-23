@@ -1,11 +1,30 @@
 package contacts.command;
 
-import contacts.controller.ContactController;
+import contacts.factory.ContactFactory;
+import contacts.model.Contact;
+import contacts.domain.ContactType;
 
-public class ContactAddCommand implements Command {
+import static contacts.utils.PhoneBookUtils.requestInput;
+
+public class ContactAddCommand extends Command {
 
     @Override
     public void execute() {
-        ContactController.getControllerInstance().add();
+        add();
+    }
+
+    public void add() {
+        String type = requestInput(format("field.enter.multiple.msg",
+                format("contact.type"), ContactType.getValuesAsString()));
+
+        try {
+            Contact contact = ContactFactory.createContact(ContactType.valueOf(type.toUpperCase()));
+            if (contact != null) {
+                contactList.add(contact);
+                print("record.add.success.msg");
+            }
+        } catch (IllegalArgumentException e) {
+            print("contact.type.unknown", type);
+        }
     }
 }

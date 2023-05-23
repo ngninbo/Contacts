@@ -1,29 +1,41 @@
 package contacts;
 
-import contacts.controller.ContactController;
-import contacts.factory.Menu;
+import contacts.command.Command;
+import contacts.domain.MenuAction;
+import contacts.core.ContactList;
+import contacts.core.ContactLoader;
+import contacts.factory.CommandFactory;
+import contacts.utils.MessageResourcesBundle;
 import contacts.utils.PhoneBookUtils;
+
+import java.text.MessageFormat;
 
 public class PhoneBook {
 
     private String action;
-    private final Menu menu;
-
-    public PhoneBook(Menu menu) {
-        this.menu = menu;
-    }
+    private ContactList contactList;
 
     public void processCommand() {
-        while (!"exit".equals(action)) {
-            action = PhoneBookUtils.requestInput("[menu] Enter action (add, list, search, count, exit): ");
-            menu.setCommand(action);
-            menu.execute();
+        while (!exit()) {
+            action = PhoneBookUtils.requestMenuSelection();
+
+            Command command = CommandFactory.commandOf(MenuAction.from(action));
+            if (command != null) {
+                command.setContactList(contactList);
+                command.execute();
+            }
+
             System.out.println();
         }
     }
 
     public PhoneBook load(String filename) {
-        ContactController.getControllerInstance().load(filename);
+        System.out.println(MessageFormat.format(MessageResourcesBundle.getInstance().get("file.open.msg"), filename));
+        this.contactList = new ContactList(ContactLoader.getInstance().load(filename));
         return this;
+    }
+
+    private boolean exit() {
+        return MenuAction.EXIT.toLowerCase().equals(action);
     }
 }

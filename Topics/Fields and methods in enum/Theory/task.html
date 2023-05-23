@@ -11,7 +11,7 @@
     FULL, HIGH, MEDIUM, LOW
 }</code></pre> 
   <p>Suppose that we need to display the level of battery charge visually. We want it to be divided into several segments and have a color indication as well, in this way:</p> 
-  <p><img alt="" src="https://ucarecdn.com/f27993b3-827c-4e3c-a7d3-2e8cc6b74626/"></p> 
+  <p><img alt="Illustration of different battery levels" height="90" src="https://ucarecdn.com/f27993b3-827c-4e3c-a7d3-2e8cc6b74626/" width="421"></p> 
   <p>To do this, we will add corresponding fields and values to our enum. When we define them, we must supply values to the constructor of the enum. Here, we created a constructor in the <code class="language-java">ChargeLevel</code> enum and added two fields <code class="language-java">sections</code> and <code class="language-java">color</code>. Also, there are two methods <code class="language-java">getSections()</code> and <code class="language-java">getColor()</code> that return the values of fields respectively.</p> 
   <pre><code class="language-java">public enum ChargeLevel {
 
@@ -20,8 +20,8 @@
     MEDIUM(2, "yellow"),
     LOW(1, "red");
 
-    int sections;
-    String color;
+    private final int sections;
+    private final String color;
 
     ChargeLevel(int sections, String color) {
         this.sections = sections;
@@ -36,11 +36,10 @@
         return color;
     }
 }</code></pre> 
-  <p>Note that all enum instances are created by the JVM in the same way as a static field of a class. This is the reason why an enum <em>cannot</em> contain a public constructor. This means we <em>cannot </em>create enum objects by invoking an enum constructor with the <code class="language-java">new</code> keyword but have to choose one of the predefined instances instead.<br> Keep in mind that if your enum contains fields and methods, you should always define them <em>after</em> the list of constants in the enum. </p> 
+  <p>Note that all enum instances are created by the JVM in the same way as a static field of a class. This is the reason why an enum <em>cannot</em> contain a public constructor. This means we <em>cannot </em>create enum objects by invoking an enum constructor with the <code class="language-java">new</code> keyword but have to choose one of the predefined instances instead. Adding <code class="language-java">private</code> access modifier to constructor doesn't make an effect.<br> Keep in mind that if your enum contains fields and methods, you should always define them <em>after</em> the list of constants in the enum. </p> 
   <p>Now we have a class with additional info gathered in one place: the number of sections to highlight and the color. </p> 
   <pre><code class="language-java">System.out.println(ChargeLevel.LOW.sections); // 1
-System.out.println(ChargeLevel.LOW.color); // red</code>
-</pre> 
+System.out.println(ChargeLevel.LOW.color); // red</code></pre> 
   <p>It is possible to extend an enum by adding custom static methods. For example, let's add a method that finds a <code class="language-java">ChargeLevel</code> instance by the given number of sections:</p> 
   <pre><code class="language-java">public enum ChargeLevel {
 
@@ -49,8 +48,8 @@ System.out.println(ChargeLevel.LOW.color); // red</code>
     MEDIUM(2, "yellow"),
     LOW(1, "red");
 
-    int sections;
-    String color;
+    private final int sections;
+    private final String color;
 
     ChargeLevel(int sections, String color) {
         this.sections = sections;

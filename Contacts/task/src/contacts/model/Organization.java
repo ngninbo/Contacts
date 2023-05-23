@@ -1,5 +1,7 @@
 package contacts.model;
 
+import contacts.domain.ContactField;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -59,14 +61,15 @@ public class Organization extends Contact {
 
     @Override
     public String getEditableFields() {
-        return "address, number";
+        return stringify(ContactField.ADDRESS, ContactField.NUMBER);
+
     }
 
     @Override
-    public void setFieldValue(String field, String value) {
-        if ("address".equals(field)) {
+    public void setFieldValue(ContactField field, String value) {
+        if (ContactField.ADDRESS.equals(field)) {
             setAddress(value);
-        } else if ("number".equals(field)) {
+        } else if (ContactField.NUMBER.equals(field)) {
             setNumber(value);
         }
 
@@ -75,6 +78,6 @@ public class Organization extends Contact {
 
     @Override
     public String appendFieldValues() {
-        return getFullName() + " " + getNumber() + " " + getAddress();
+        return String.join(" ", getFullName(), getNumber(), getAddress());
     }
 }

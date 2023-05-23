@@ -10,13 +10,7 @@ import java.util.stream.Collectors;
 
 public class ContactLoader {
 
-    private static final ContactLoader INSTANCE = new ContactLoader();
-
-    public static ContactLoader getInstance() {
-        return INSTANCE;
-    }
-
-    public ContactList load(String filename) {
+    public static ContactList load(String filename) {
         File file = new File(filename);
 
         if (file.exists()) {

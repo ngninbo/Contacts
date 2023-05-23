@@ -15,6 +15,10 @@ public class ContactList extends ArrayList<Contact> {
 
     private String filename;
 
+    public ContactList() {
+        super();
+    }
+
     private ContactList(List<Contact> contacts) {
         super(contacts);
     }
@@ -25,12 +29,13 @@ public class ContactList extends ArrayList<Contact> {
     }
 
     public ContactList(String filename) {
+        this();
         this.filename = filename;
     }
 
     public static ContactList from(String filename) {
         System.out.println(MessageFormat.format(MessageResourcesBundle.getInstance().get("file.open.msg"), filename));
-        return ContactLoader.getInstance().load(filename);
+        return ContactLoader.load(filename);
     }
 
     public void update(Contact contact) {

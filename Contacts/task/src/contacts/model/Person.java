@@ -1,9 +1,11 @@
 package contacts.model;
 
 import contacts.domain.ContactField;
+import contacts.utils.PhoneBookUtils;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Person extends Contact {
 
@@ -71,9 +73,8 @@ public class Person extends Contact {
 
     @Override
     public void info() {
-        System.out.printf("Name: %s\nSurname: %s\nBirth date: %s\nGender: " +
-                "%s\nNumber: %s\nTime created: %s\nTime last edit: %s\n",
-                name, surname, birthdate, gender, number, createdTime, lastEditTime);
+        System.out.println(PhoneBookUtils.format("person.info",
+                name, surname, birthdate, gender, number, createdTime, lastEditTime));
     }
 
     @Override
@@ -82,8 +83,8 @@ public class Person extends Contact {
     }
 
     @Override
-    public String getEditableFields() {
-        return stringify(ContactField.NAME, ContactField.SURNAME, ContactField.BIRTH, ContactField.GENDER, ContactField.NUMBER);
+    public Stream<String> getEditableFields() {
+        return stringify(Stream.of(ContactField.NAME, ContactField.SURNAME, ContactField.BIRTH, ContactField.GENDER, ContactField.NUMBER));
     }
 
     @Override

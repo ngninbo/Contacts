@@ -7,9 +7,8 @@ public class ContactDeleteCommand extends Command {
     private Contact contact;
 
     @Override
-    public Command setContact(Contact contact) {
+    public void setContact(Contact contact) {
         this.contact = contact;
-        return this;
     }
 
     @Override

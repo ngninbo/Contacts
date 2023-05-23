@@ -10,10 +10,11 @@ public class ContactEditCommand extends Command {
     private Contact contact;
 
     @Override
-    public Command setContact(Contact contact) {
+    public void setContact(Contact contact) {
         this.contact = contact;
-        return this;
     }
+
+
 
     @Override
     public void execute() {
@@ -21,12 +22,12 @@ public class ContactEditCommand extends Command {
     }
 
     public void edit() {
-        final String input = requestInput(format("field.selection.msg", contact.getEditableFields()));
+        final String input = requestInput(format("field.selection.msg", join(contact.getEditableFields())));
 
         try {
-            ContactField field = ContactField.valueOf(input);
+            ContactField field = ContactField.valueOf(input.toUpperCase());
 
-            String value = requestInput(format("enter.selected.msg", field.name().toLowerCase()));
+            String value = requestInput(format("enter.selected.msg", format(field.getLabel())));
             contact.setFieldValue(field, value);
             contactList.update(contact);
             print("record.save.msg");

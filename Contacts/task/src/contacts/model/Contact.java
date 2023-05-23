@@ -4,7 +4,6 @@ import contacts.domain.ContactField;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class Contact implements Serializable {
@@ -35,15 +34,13 @@ public abstract class Contact implements Serializable {
 
     public abstract String getFullName();
 
-    public abstract String getEditableFields();
+    public abstract Stream<String> getEditableFields();
 
     public abstract void setFieldValue(ContactField field, String value);
 
     public abstract String appendFieldValues();
 
-    public String stringify(ContactField... fields) {
-        return Stream.of(fields).map(Enum::name)
-                .map(String::toLowerCase)
-                .collect(Collectors.joining(", "));
+    public Stream<String> stringify(Stream<ContactField> fields) {
+        return fields.map(ContactField::getLabel);
     }
 }

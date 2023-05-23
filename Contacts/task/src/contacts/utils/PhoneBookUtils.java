@@ -6,6 +6,8 @@ import contacts.domain.Gender;
 
 import java.text.MessageFormat;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PhoneBookUtils {
 
@@ -15,43 +17,44 @@ public class PhoneBookUtils {
     }
 
     public static String requestMenuSelection() {
-        return requestInput(getMessage("menu.action.selection.msg",
-                ContactUpdateAction.MENU.name().toLowerCase(), MenuAction.getActions()));
+        return requestInput(format("menu.action.selection.msg",
+                format(ContactUpdateAction.MENU.getLabel()), join(MenuAction.getActions())));
     }
 
     public static String requestAddressInput() {
-        return requestInput(getMessage("field.enter.msg", "address"));
+        return requestInput(format("field.enter.msg", format("contact.address").toLowerCase()));
     }
 
     public static String requestNumberInput() {
-        return requestInput(getMessage("field.enter.msg", "number"));
+        return requestInput(format("field.enter.msg", format("contact.number").toLowerCase()));
     }
 
     public static String requestNameInput() {
-        return requestInput(getMessage("field.enter.msg", "name"));
+        return requestInput(format("field.enter.msg", format("contact.name").toLowerCase()));
     }
 
     public static String requestSurnameInput() {
-        return requestInput(getMessage("field.enter.msg", "surname"));
+        return requestInput(format("field.enter.msg", format("contact.surname").toLowerCase()));
     }
 
     public static String requestBirthdateInput() {
-        return requestInput(getMessage("field.enter.msg", "birth date"));
+        return requestInput(format("field.enter.msg", format("contact.creation.birth").toLowerCase()));
     }
 
     public static String requestGenderInput() {
-        return requestInput(getMessage("field.enter.multiple.msg", "gender", Gender.getValuesAsString()));
+        return requestInput(format("field.enter.multiple.msg",
+                format("contact.gender").toLowerCase(), Gender.getValuesAsString()));
     }
 
     public static String requestOrganisationName() {
-        return requestInput(getMessage("field.enter.msg", "organization name"));
-    }
-
-    public static String getMessage(String key, Object... params) {
-        return format(key, params);
+        return requestInput(format("field.enter.msg", format("organization.name").toLowerCase()));
     }
 
     public static String format(String messageKey, Object... params) {
         return MessageFormat.format(MessageResourcesBundle.getInstance().get(messageKey), params);
+    }
+
+    public static String join(Stream<String> keys) {
+        return keys.map(PhoneBookUtils::format).collect(Collectors.joining(", "));
     }
 }

@@ -1,9 +1,11 @@
 package contacts.model;
 
 import contacts.domain.ContactField;
+import contacts.utils.PhoneBookUtils;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Organization extends Contact {
 
@@ -50,8 +52,8 @@ public class Organization extends Contact {
 
     @Override
     public void info() {
-        System.out.printf("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s\n",
-                organizationName, address, number, createdTime, lastEditTime);
+        System.out.println(PhoneBookUtils.format("organization.info",
+                organizationName, address, number, createdTime, lastEditTime));
     }
 
     @Override
@@ -60,17 +62,23 @@ public class Organization extends Contact {
     }
 
     @Override
-    public String getEditableFields() {
-        return stringify(ContactField.ADDRESS, ContactField.NUMBER);
-
+    public Stream<String> getEditableFields() {
+        return stringify(Stream.of(ContactField.NAME, ContactField.ADDRESS, ContactField.NUMBER));
     }
 
     @Override
     public void setFieldValue(ContactField field, String value) {
-        if (ContactField.ADDRESS.equals(field)) {
-            setAddress(value);
-        } else if (ContactField.NUMBER.equals(field)) {
-            setNumber(value);
+
+        switch (field) {
+            case NAME:
+                setOrganizationName(value);
+                break;
+            case NUMBER:
+                setNumber(value);
+                break;
+            case ADDRESS:
+               setAddress(value);
+            default:
         }
 
         setLastEditTime(LocalDateTime.now());

@@ -22,11 +22,13 @@ public class ContactUpdateCommand extends Command {
 
         while (process(action)) {
             action = ContactUpdateAction.from(requestInput("\n".concat(format("menu.action.selection.msg",
-                            format("record.label"), ContactUpdateAction.getActions()))));
+                            format("record.label"), join(ContactUpdateAction.getActions())))));
 
             Command command = CommandFactory.commandOf(action);
             if (command != null) {
-                command.setContact(contact).execute();
+                command.setContactList(contactList);
+                command.setContact(contact);
+                command.execute();
             }
         }
     }

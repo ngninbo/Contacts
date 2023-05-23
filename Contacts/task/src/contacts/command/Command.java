@@ -3,13 +3,11 @@ package contacts.command;
 import contacts.core.ContactList;
 import contacts.model.Contact;
 import contacts.utils.InputValidator;
-import contacts.utils.MessageResourcesBundle;
+import contacts.utils.PhoneBookUtils;
 
-import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public abstract class Command {
 
@@ -21,9 +19,7 @@ public abstract class Command {
 
     public abstract void execute();
 
-    public Command setContact(Contact contact) {
-       return null;
-    }
+    public void setContact(Contact contact) {}
 
     public void list(List<Contact> contacts) {
         IntStream.range(0, contacts.size())
@@ -33,16 +29,18 @@ public abstract class Command {
     public void updateItems(String action, List<Contact> contacts) {
         if (InputValidator.isValidAction().test(action, contacts.size())) {
             int number = Integer.parseInt(action) - 1;
-            new ContactUpdateCommand(contacts.get(number)).execute();
+            Command command = new ContactUpdateCommand(contacts.get(number));
+            command.setContactList(contactList);
+            command.execute();
         }
     }
 
     public String format(String messageKey, Object... vargs) {
-        return MessageFormat.format(MessageResourcesBundle.getInstance().get(messageKey), vargs);
+        return PhoneBookUtils.format(messageKey, vargs);
     }
 
-    public String join(String... keys) {
-        return Arrays.stream(keys).map(this::format).collect(Collectors.joining(", "));
+    public String join(Stream<String> keys) {
+        return PhoneBookUtils.join(keys).toLowerCase();
     }
 
     public void print(String messageKey, Object... args) {

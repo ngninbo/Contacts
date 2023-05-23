@@ -3,7 +3,7 @@ package contacts.domain;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum MenuAction {
 
@@ -18,17 +18,20 @@ public enum MenuAction {
         return name().toLowerCase();
     }
 
+    public String getLabel() {
+        return "action.".concat(toLowerCase());
+    }
+
     public static MenuAction from(String action) {
         return Arrays.stream(values())
                 .filter(menuAction -> filter().test(menuAction, action))
                 .findFirst().orElse(UNKNOWN);
     }
 
-    public static String getActions() {
+    public static Stream<String> getActions() {
         return Arrays.stream(values())
                 .filter(isKnown())
-                .map(MenuAction::toLowerCase)
-                .collect(Collectors.joining(", "));
+                .map(MenuAction::getLabel);
     }
 
     private static BiPredicate<MenuAction, String> filter() {
@@ -39,7 +42,7 @@ public enum MenuAction {
         return menuAction -> !UNKNOWN.equals(menuAction);
     }
 
-    private static BiPredicate<String, String> isEquals() {
+    public static BiPredicate<String, String> isEquals() {
        return (actionName, input) -> input.equalsIgnoreCase(actionName);
     }
 }

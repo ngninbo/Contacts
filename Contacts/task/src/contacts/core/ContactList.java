@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ContactList extends ArrayList<Contact> {
 
     public ContactList(List<Contact> contacts) {
-        this.addAll(contacts);
+        super(contacts);
     }
 
     public void update(Contact contact) {

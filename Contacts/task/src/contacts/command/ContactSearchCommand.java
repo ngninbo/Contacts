@@ -4,12 +4,13 @@ import contacts.domain.MenuAction;
 import contacts.model.Contact;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static contacts.utils.PhoneBookUtils.requestInput;
 
 public class ContactSearchCommand extends Command {
 
-    private final String again = format("search.again");
+    private final String again = format("action.again");
 
     @Override
     public void execute() {
@@ -27,7 +28,7 @@ public class ContactSearchCommand extends Command {
 
         list(contactItems);
         String action = requestInput("\n".concat(format("menu.action.selection.msg",
-                MenuAction.SEARCH.name().toLowerCase(), join("list.number", "list.back", "search.again"))));
+                MenuAction.SEARCH.name().toLowerCase(), join(Stream.of("action.number", "action.back", "action.again")))));
 
         if (again.equals(action)) {
             search();

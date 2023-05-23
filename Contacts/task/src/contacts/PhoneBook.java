@@ -3,17 +3,21 @@ package contacts;
 import contacts.command.Command;
 import contacts.domain.MenuAction;
 import contacts.core.ContactList;
-import contacts.core.ContactLoader;
 import contacts.factory.CommandFactory;
-import contacts.utils.MessageResourcesBundle;
 import contacts.utils.PhoneBookUtils;
-
-import java.text.MessageFormat;
 
 public class PhoneBook {
 
     private String action;
-    private ContactList contactList;
+    private final ContactList contactList;
+
+    private PhoneBook(ContactList contactList) {
+        this.contactList = contactList;
+    }
+
+    public static PhoneBook of(ContactList contactList) {
+        return new PhoneBook(contactList);
+    }
 
     public void processCommand() {
         while (!exit()) {
@@ -27,12 +31,6 @@ public class PhoneBook {
 
             System.out.println();
         }
-    }
-
-    public PhoneBook load(String filename) {
-        System.out.println(MessageFormat.format(MessageResourcesBundle.getInstance().get("file.open.msg"), filename));
-        this.contactList = new ContactList(ContactLoader.getInstance().load(filename));
-        return this;
     }
 
     private boolean exit() {

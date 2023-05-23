@@ -1,12 +1,16 @@
 package contacts.utils;
 
+import contacts.core.ContactList;
 import contacts.domain.ContactUpdateAction;
 import contacts.domain.MenuAction;
 import contacts.domain.Gender;
+import contacts.model.Contact;
 
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class PhoneBookUtils {
@@ -56,5 +60,11 @@ public class PhoneBookUtils {
 
     public static String join(Stream<String> keys) {
         return keys.map(PhoneBookUtils::format).collect(Collectors.joining(", "));
+    }
+
+    public static String format(List<Contact> contactList) {
+        return IntStream.range(0, contactList.size())
+                .mapToObj(i -> format("item.format", i + 1, contactList.get(i).getFullName()))
+                .collect(Collectors.joining("\n"));
     }
 }

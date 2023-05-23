@@ -1,10 +1,10 @@
 package contacts;
 
+import contacts.core.ContactList;
+
 public class Main {
 
     public static void main(String[] args) {
-        new PhoneBook()
-                .load(args[1])
-                .processCommand();
+        PhoneBook.of(ContactList.from(args[1])).processCommand();
     }
 }

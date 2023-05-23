@@ -6,7 +6,6 @@ import contacts.utils.InputValidator;
 import contacts.utils.PhoneBookUtils;
 
 import java.util.List;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public abstract class Command {
@@ -22,8 +21,7 @@ public abstract class Command {
     public void setContact(Contact contact) {}
 
     public void list(List<Contact> contacts) {
-        IntStream.range(0, contacts.size())
-                .forEach(i -> print("item.format", i + 1, contacts.get(i).getFullName()));
+        System.out.println(PhoneBookUtils.format(contacts));
     }
 
     public void updateItems(String action, List<Contact> contacts) {

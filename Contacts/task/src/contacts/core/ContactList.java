@@ -1,11 +1,10 @@
 package contacts.core;
 
+import contacts.factory.MessageFactory;
 import contacts.model.Contact;
 import contacts.utils.InputValidator;
-import contacts.utils.MessageResourcesBundle;
 import contacts.utils.SerializationUtils;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +33,7 @@ public class ContactList extends ArrayList<Contact> {
     }
 
     public static ContactList from(String filename) {
-        System.out.println(MessageFormat.format(MessageResourcesBundle.getInstance().get("file.open.msg"), filename));
+        System.out.println(MessageFactory.format("file.open.msg", filename));
         return ContactLoader.load(filename);
     }
 
@@ -46,9 +45,9 @@ public class ContactList extends ArrayList<Contact> {
         set(contactIndex, contact);
     }
 
-    public List<Contact> search(String query) {
+    public List<Contact> search(String regex) {
         return stream()
-                .filter(contact -> InputValidator.match(contact.appendFieldValues(), query))
+                .filter(contact -> InputValidator.match(contact.appendFieldValues(), regex))
                 .sorted(Comparator.comparing(Contact::getFullName))
                 .collect(Collectors.toList());
     }

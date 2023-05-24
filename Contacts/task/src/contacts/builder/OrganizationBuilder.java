@@ -1,9 +1,10 @@
 package contacts.builder;
 
+import contacts.domain.ContactField;
 import contacts.model.Contact;
 import contacts.model.Organization;
 
-import static contacts.utils.PhoneBookUtils.*;
+import static contacts.factory.RequestFactory.*;
 
 public class OrganizationBuilder extends ContactBuilder {
 
@@ -21,11 +22,11 @@ public class OrganizationBuilder extends ContactBuilder {
 
     @Override
     public void setNumber() {
-        organization.setNumber(validate(requestNumberInput()));
+        organization.setNumber(validate(ContactField.NUMBER, request(ContactField.NUMBER)));
     }
 
     public void setAddress() {
-        organization.setAddress(requestAddressInput());
+        organization.setAddress(request(ContactField.ADDRESS));
     }
 
     @Override

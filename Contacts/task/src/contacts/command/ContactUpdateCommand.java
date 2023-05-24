@@ -4,7 +4,7 @@ import contacts.domain.ContactUpdateAction;
 import contacts.factory.CommandFactory;
 import contacts.model.Contact;
 
-import static contacts.utils.PhoneBookUtils.requestInput;
+import static contacts.factory.RequestFactory.requestContactUpdateAction;
 
 public class ContactUpdateCommand extends Command {
 
@@ -21,8 +21,7 @@ public class ContactUpdateCommand extends Command {
         contact.info();
 
         while (process(action)) {
-            action = ContactUpdateAction.from(requestInput("\n".concat(format("menu.action.selection.msg",
-                            format("record.label"), join(ContactUpdateAction.getActions())))));
+            action = ContactUpdateAction.from(requestContactUpdateAction());
 
             Command command = CommandFactory.commandOf(action);
             if (command != null) {

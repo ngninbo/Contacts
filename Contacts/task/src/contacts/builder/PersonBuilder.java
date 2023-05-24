@@ -1,11 +1,10 @@
 package contacts.builder;
 
+import contacts.domain.ContactField;
 import contacts.model.Contact;
-import contacts.domain.Gender;
 import contacts.model.Person;
-import contacts.utils.InputValidator;
 
-import static contacts.utils.PhoneBookUtils.*;
+import static contacts.factory.RequestFactory.*;
 
 public class PersonBuilder extends ContactBuilder {
 
@@ -18,37 +17,24 @@ public class PersonBuilder extends ContactBuilder {
 
     @Override
     public void setName() {
-        person.setName(requestNameInput());
+        person.setName(request(ContactField.NAME));
     }
 
     @Override
     public void setNumber() {
-        person.setNumber(validate(requestNumberInput()));
+        person.setNumber(validate(ContactField.NUMBER, request(ContactField.NUMBER)));
     }
 
     public void setSurname() {
-        person.setSurname(requestSurnameInput());
+        person.setSurname(request(ContactField.SURNAME));
     }
 
     public void setBirthdate() {
-        String birthdate = requestBirthdateInput();
-        if (!InputValidator.isValidBirthDate(birthdate)) {
-            System.out.println(resourcesBundle.get("birthdate.validation.error"));
-            birthdate = resourcesBundle.get("missing.value.msg");
-        }
-
-        person.setBirthdate(birthdate);
+        person.setBirthdate(validate(ContactField.BIRTH, requestBirthdateInput()));
     }
 
     public void setGender() {
-        String gender = requestGenderInput();
-
-        if (!InputValidator.isValidGender(gender)) {
-            System.out.println(resourcesBundle.get("gender.validation.error"));
-            gender = resourcesBundle.get("missing.value.msg");
-        }
-
-        person.setGender(gender);
+        person.setGender(validate(ContactField.GENDER, request(ContactField.GENDER)));
     }
 
     @Override

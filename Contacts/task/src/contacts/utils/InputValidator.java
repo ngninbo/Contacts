@@ -1,37 +1,29 @@
 package contacts.utils;
 
-import contacts.domain.Gender;
+import contacts.domain.ContactField;
+import contacts.factory.MessageFactory;
+import contacts.factory.PatternFactory;
 
-import java.text.MessageFormat;
 import java.util.function.BiPredicate;
 import java.util.regex.Pattern;
 
 public class InputValidator {
 
-    private static final MessageResourcesBundle resourcesBundle = MessageResourcesBundle.getInstance("pattern");
+    public static String validate(ContactField field, String value) {
 
-    public static boolean isValidNumber(String number) {
-        return number.matches(resourcesBundle.get("phone.number"));
+        if (!match(value, field.getRegex())) {
+            System.out.println(MessageFactory.from(String.format("%s.validation.error.msg", field.name().toLowerCase())));
+            value = MessageFactory.from(String.format("missing.%s.msg", ContactField.NUMBER.equals(field) ? "number" : "value"));
+        }
+
+        return value;
     }
 
-    public static boolean isValidBirthDate(String birthdate) {
-        return birthdate.matches(resourcesBundle.get("birth.date"));
-    }
-
-    public static boolean match(String input, String query) {
-        final String regex = format("search.query", query);
+    public static boolean match(String input, String regex) {
         return Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(input).matches();
     }
 
     public static BiPredicate<String, Integer> isValidAction() {
-        return (action, limit) -> action.matches(format("list.regex", limit));
-    }
-
-    private static String format(String pattern, Object... args) {
-        return MessageFormat.format(resourcesBundle.get(pattern), args);
-    }
-
-    public static boolean isValidGender(String gender) {
-        return gender.matches(format("gender.regex", Gender.getValuesAsString().replace(", ", "")));
+        return (action, limit) -> match(action, PatternFactory.format("list.regex", limit));
     }
 }

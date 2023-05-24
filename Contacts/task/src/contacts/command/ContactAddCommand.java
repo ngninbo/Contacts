@@ -4,7 +4,7 @@ import contacts.factory.ContactFactory;
 import contacts.model.Contact;
 import contacts.domain.ContactType;
 
-import static contacts.utils.PhoneBookUtils.requestInput;
+import static contacts.factory.RequestFactory.requestContactType;
 
 public class ContactAddCommand extends Command {
 
@@ -14,8 +14,7 @@ public class ContactAddCommand extends Command {
     }
 
     public void add() {
-        String type = requestInput(format("field.enter.multiple.msg",
-                format("contact.type"), ContactType.getValuesAsString()));
+        String type = requestContactType();
 
         try {
             Contact contact = ContactFactory.createContact(ContactType.valueOf(type.toUpperCase()));

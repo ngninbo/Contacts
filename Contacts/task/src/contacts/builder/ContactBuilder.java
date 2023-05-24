@@ -1,12 +1,10 @@
 package contacts.builder;
 
+import contacts.domain.ContactField;
 import contacts.model.Contact;
 import contacts.utils.InputValidator;
-import contacts.utils.MessageResourcesBundle;
 
 public abstract class ContactBuilder {
-
-    protected MessageResourcesBundle resourcesBundle = MessageResourcesBundle.getInstance();
 
     public abstract void init();
     public abstract void setName();
@@ -14,12 +12,7 @@ public abstract class ContactBuilder {
 
     public abstract Contact create();
 
-    public String validate(String number) {
-        if (!InputValidator.isValidNumber(number)) {
-            System.out.println(resourcesBundle.get("number.validation.error.msg"));
-            number = resourcesBundle.get("missing.number.msg");
-        }
-
-        return number;
+    public static String validate(ContactField field, String value) {
+        return InputValidator.validate(field, value);
     }
 }

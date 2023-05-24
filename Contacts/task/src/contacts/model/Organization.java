@@ -1,7 +1,7 @@
 package contacts.model;
 
 import contacts.domain.ContactField;
-import contacts.utils.PhoneBookUtils;
+import contacts.factory.MessageFactory;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -52,13 +52,13 @@ public class Organization extends Contact {
 
     @Override
     public void info() {
-        System.out.println(PhoneBookUtils.format("organization.info",
+        System.out.println(MessageFactory.format("organization.info",
                 organizationName, address, number, createdTime, lastEditTime));
     }
 
     @Override
     public String getFullName() {
-        return organizationName;
+        return getOrganizationName();
     }
 
     @Override

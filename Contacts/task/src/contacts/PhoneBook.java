@@ -4,7 +4,7 @@ import contacts.command.Command;
 import contacts.domain.MenuAction;
 import contacts.core.ContactList;
 import contacts.factory.CommandFactory;
-import contacts.utils.PhoneBookUtils;
+import contacts.factory.RequestFactory;
 
 public class PhoneBook {
 
@@ -21,7 +21,7 @@ public class PhoneBook {
 
     public void processCommand() {
         while (!exit()) {
-            action = PhoneBookUtils.requestMenuSelection();
+            action = RequestFactory.requestMenuSelection();
 
             Command command = CommandFactory.commandOf(MenuAction.from(action));
             if (command != null) {

@@ -6,7 +6,7 @@ import contacts.model.Contact;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static contacts.utils.PhoneBookUtils.requestInput;
+import static contacts.factory.RequestFactory.requestInput;
 
 public class ContactSearchCommand extends Command {
 
@@ -19,7 +19,8 @@ public class ContactSearchCommand extends Command {
 
     public void search() {
         String query = requestInput(format("enter.search.query.msg"));
-        List<Contact> contactItems = contactList.search(query);
+        String regex = format("search.query", query);
+        List<Contact> contactItems = contactList.search(regex);
         print("search.result.msg", contactItems.size());
 
         if (contactItems.isEmpty()) {

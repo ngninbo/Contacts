@@ -17,8 +17,7 @@ public class ContactDeleteCommand extends Command {
     }
 
     private void delete() {
-        boolean deletionSucceed = contactList.remove(contact);
-        if (deletionSucceed) {
+        if (contactList.remove(contact)) {
             print("record.delete.success.msg");
         }
     }

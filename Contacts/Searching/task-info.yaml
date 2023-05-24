@@ -232,21 +232,6 @@ files:
         Contact createContact();
     }
   learner_created: true
-- name: src/contacts/utils/PhoneBookUtils.java
-  visible: true
-  text: |
-    package contacts.utils;
-
-    import java.util.Scanner;
-
-    public class PhoneBookUtils {
-
-        public static String requestInput(String message) {
-            System.out.print(message);
-            return new Scanner(System.in).nextLine();
-        }
-    }
-  learner_created: true
 - name: src/contacts/command/Command.java
   visible: true
   text: |
@@ -700,9 +685,6 @@ files:
 - name: src/main/resources/messages.properties
   visible: true
   learner_created: true
-- name: src/contacts/utils/MessageResourcesBundle.java
-  visible: true
-  learner_created: true
 - name: src/contacts/factory/ContactBuilderFactory.java
   visible: true
   learner_created: true
@@ -754,6 +736,30 @@ files:
   visible: true
   learner_created: true
 - name: src/contacts/domain/ContactField.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/RequestFactory.java
+  visible: true
+  text: |
+    package contacts.utils;
+
+    import java.util.Scanner;
+
+    public class PhoneBookUtils {
+
+        public static String requestInput(String message) {
+            System.out.print(message);
+            return new Scanner(System.in).nextLine();
+        }
+    }
+  learner_created: true
+- name: src/contacts/factory/MessageFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/PatternFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/ResourcesBundleFactory.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5327#comment

@@ -762,6 +762,24 @@ files:
 - name: src/contacts/factory/ResourcesBundleFactory.java
   visible: true
   learner_created: true
+- name: src/contacts/domain/MainMenu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/SearchMenu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/ListMenu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/UpdateMenu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/MenuFactory.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/Menu.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5327#comment
 status: Solved
 feedback:

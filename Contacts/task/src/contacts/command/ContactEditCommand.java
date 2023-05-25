@@ -33,10 +33,10 @@ public class ContactEditCommand extends Command {
 
             contact.setFieldValue(field, value);
             contactList.update(contact);
-            print("record.save.msg");
+            print(RECORD_SAVE_MSG);
             contact.info();
         } catch (IllegalArgumentException e) {
-            print("field.incorrect.msg", input);
+            print(FIELD_INCORRECT_MSG, input);
         }
     }
 

@@ -4,7 +4,7 @@ import contacts.factory.ContactFactory;
 import contacts.model.Contact;
 import contacts.domain.ContactType;
 
-import static contacts.factory.RequestFactory.requestContactType;
+import static contacts.factory.RequestFactory.*;
 
 public class ContactAddCommand extends Command {
 
@@ -17,13 +17,14 @@ public class ContactAddCommand extends Command {
         String type = requestContactType();
 
         try {
-            Contact contact = ContactFactory.createContact(ContactType.valueOf(type.toUpperCase()));
-            if (contact != null) {
-                contactList.add(contact);
-                print("record.add.success.msg");
-            }
+            ContactFactory.of(ContactType.valueOf(type.toUpperCase())).ifPresent(this::add);
         } catch (IllegalArgumentException e) {
-            print("contact.type.unknown", type);
+            print(CONTACT_TYPE_UNKNOWN, type);
         }
+    }
+
+    private void add(Contact contact) {
+        contactList.add(contact);
+        print(RECORD_ADD_SUCCESS_MSG);
     }
 }

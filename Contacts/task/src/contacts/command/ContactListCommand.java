@@ -1,6 +1,9 @@
 package contacts.command;
 
-import static contacts.factory.RequestFactory.requestListItemSelection;
+import contacts.domain.MenuAction;
+
+import static contacts.factory.RequestFactory.CONTACT_LIST_EMPTY_MSG;
+import static contacts.factory.RequestFactory.requestInput;
 
 public class ContactListCommand extends Command {
 
@@ -12,13 +15,13 @@ public class ContactListCommand extends Command {
     public void list() {
 
         if (contactList.isEmpty()) {
-            print("contactList.empty.msg");
+            print(CONTACT_LIST_EMPTY_MSG);
             return;
         }
 
         list(contactList);
 
-        String action = requestListItemSelection();
+        String action = requestInput(MenuAction.LIST);;
 
         updateItems(action, contactList);
     }

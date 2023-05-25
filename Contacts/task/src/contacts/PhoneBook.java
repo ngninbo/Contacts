@@ -1,14 +1,16 @@
 package contacts;
 
 import contacts.command.Command;
+import contacts.domain.MainMenu;
 import contacts.domain.MenuAction;
 import contacts.core.ContactList;
 import contacts.factory.CommandFactory;
-import contacts.factory.RequestFactory;
+
+import static contacts.factory.RequestFactory.requestInput;
 
 public class PhoneBook {
 
-    private String action;
+    private MenuAction action;
     private final ContactList contactList;
 
     private PhoneBook(ContactList contactList) {
@@ -21,19 +23,17 @@ public class PhoneBook {
 
     public void processCommand() {
         while (!exit()) {
-            action = RequestFactory.requestMenuSelection();
-
-            Command command = CommandFactory.commandOf(MenuAction.from(action));
-            if (command != null) {
-                command.setContactList(contactList);
-                command.execute();
-            }
-
-            System.out.println();
+            action = new MainMenu().getAction(requestInput(MenuAction.MENU));
+            CommandFactory.of(action).ifPresent(this::execute);
         }
     }
 
     private boolean exit() {
-        return MenuAction.EXIT.toLowerCase().equals(action);
+        return MenuAction.EXIT.equals(action);
+    }
+
+    private void execute(Command command) {
+        command.setContactList(contactList);
+        command.execute();
     }
 }

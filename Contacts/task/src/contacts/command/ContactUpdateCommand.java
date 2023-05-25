@@ -1,16 +1,17 @@
 package contacts.command;
 
-import contacts.domain.ContactUpdateAction;
+import contacts.domain.MenuAction;
+import contacts.domain.UpdateMenu;
 import contacts.factory.CommandFactory;
 import contacts.model.Contact;
 
-import static contacts.factory.RequestFactory.requestContactUpdateAction;
+import static contacts.factory.RequestFactory.requestInput;
 
 public class ContactUpdateCommand extends Command {
 
     private final Contact contact;
 
-    private ContactUpdateAction action = ContactUpdateAction.NO_ACTION;
+    private MenuAction action = MenuAction.NO_ACTION;
 
     public ContactUpdateCommand(Contact contact) {
         this.contact = contact;
@@ -21,18 +22,18 @@ public class ContactUpdateCommand extends Command {
         contact.info();
 
         while (process(action)) {
-            action = ContactUpdateAction.from(requestContactUpdateAction());
-
-            Command command = CommandFactory.commandOf(action);
-            if (command != null) {
-                command.setContactList(contactList);
-                command.setContact(contact);
-                command.execute();
-            }
+            action = new UpdateMenu().getAction(requestInput(MenuAction.VIEW_RECORD));
+            CommandFactory.of(action).ifPresent(this::execute);
         }
     }
 
-    private boolean process(ContactUpdateAction action) {
-        return !ContactUpdateAction.MENU.equals(action);
+    private void execute(Command command) {
+        command.setContactList(contactList);
+        command.setContact(contact);
+        command.execute();
+    }
+
+    private boolean process(MenuAction action) {
+        return !MenuAction.MENU.equals(action);
     }
 }

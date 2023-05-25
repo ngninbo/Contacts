@@ -13,31 +13,33 @@ public class RequestFactory {
     public static final String FIELD_ENTER_MULTIPLE_MSG = "field.enter.multiple.msg";
     public static final String CONTACT_GENDER = "contact.gender";
     public static final String ORGANIZATION_NAME = "organization.name";
-    public static final String ACTION_NUMBER = "action.number";
-    public static final String ACTION_BACK = "action.back";
     public static final String CONTACT_TYPE = "contact.type";
     public static final String FIELD_SELECTION_MSG = "field.selection.msg";
     public static final String ENTER_SELECTED_MSG = "enter.selected.msg";
-    public static final String RECORD_LABEL = "record.label";
     public static final String CONTACT_CREATION_BIRTH = "contact.creation.birth";
+    public static final String ENTER_SEARCH_QUERY_MSG = "enter.search.query.msg";
+    public static final String ACTION_AGAIN = "action.again";
+    public static final String SEARCH_QUERY = "search.query";
+    public static final String SEARCH_RESULT_MSG = "search.result.msg";
+    public static final String CONTACT_LIST_EMPTY_MSG = "contactList.empty.msg";
+    public static final String RECORD_SAVE_MSG = "record.save.msg";
+    public static final String FIELD_INCORRECT_MSG = "field.incorrect.msg";
+    public static final String RECORD_DELETE_SUCCESS_MSG = "record.delete.success.msg";
+    public static final String PHONE_BOOK_RECORD_SIZE_MSG = "phone.book.record.size.msg";
+    public static final String RECORD_ADD_SUCCESS_MSG = "record.add.success.msg";
+    public static final String CONTACT_TYPE_UNKNOWN = "contact.type.unknown";
 
     public static String requestInput(String message) {
         System.out.print(message.concat(": "));
         return new Scanner(System.in).nextLine();
     }
 
-    public static String requestListItemSelection() {
-        return requestInput("\n".concat(format(MENU_ACTION_SELECTION_MSG, MenuAction.LIST.toLowerCase(),
-                join(Stream.of(ACTION_NUMBER, ACTION_BACK)))));
+    public static String request(MenuAction menuAction, Stream<String> options) {
+        return requestInput("\n".concat(format(MENU_ACTION_SELECTION_MSG, from(menuAction.getLabel()), join(options))));
     }
 
-    public static String requestContactUpdateAction() {
-        return requestInput("\n".concat(format(MENU_ACTION_SELECTION_MSG,
-                format(RECORD_LABEL), join(ContactUpdateAction.getActions()))));
-    }
-
-    public static String requestMenuSelection() {
-        return requestInput(format(MENU_ACTION_SELECTION_MSG, from(ContactUpdateAction.MENU.getLabel()), join(MenuAction.getActions())));
+    public static String requestInput(MenuAction action) {
+        return request(action, MenuFactory.from(action));
     }
 
     public static String requestField(String fields) {
@@ -45,11 +47,15 @@ public class RequestFactory {
     }
 
     public static String requestValue(ContactField field) {
-        return requestInput(format(ENTER_SELECTED_MSG, format(field.getLabel()).toLowerCase()));
+        return requestInput(format(ENTER_SELECTED_MSG, from(field.getLabel()).toLowerCase()));
     }
 
     public static String requestContactType() {
-        return requestInput(format(FIELD_ENTER_MULTIPLE_MSG, from(CONTACT_TYPE), ContactType.getValuesAsString()));
+        return requestInput(format(FIELD_ENTER_MULTIPLE_MSG, from(CONTACT_TYPE), join(ContactType.getValues()).toLowerCase()));
+    }
+
+    public static String requestSearchQuery() {
+        return requestInput(from(ENTER_SEARCH_QUERY_MSG));
     }
 
     public static String request(ContactField field) {

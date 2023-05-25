@@ -1,12 +1,17 @@
 package contacts.factory;
 
 import contacts.command.*;
-import contacts.domain.ContactUpdateAction;
 import contacts.domain.MenuAction;
+
+import java.util.Optional;
 
 public class CommandFactory {
 
-    public static Command commandOf(MenuAction action) {
+    public static Optional<Command> of(MenuAction action) {
+        return Optional.ofNullable(commandOf(action));
+    }
+
+    private static Command commandOf(MenuAction action) {
         switch (action) {
             case ADD:
                 return new ContactAddCommand();
@@ -18,13 +23,6 @@ public class CommandFactory {
                 return new ContactCountCommand();
             case EXIT:
                 return new PhoneBookExitCommand();
-            default:
-                return null;
-        }
-    }
-
-    public static Command commandOf(ContactUpdateAction action) {
-        switch (action) {
             case EDIT:
                 return new ContactEditCommand();
             case DELETE:

@@ -1,16 +1,15 @@
 package contacts.command;
 
 import contacts.domain.MenuAction;
+import contacts.factory.MessageFactory;
+import contacts.factory.PatternFactory;
 import contacts.model.Contact;
 
 import java.util.List;
-import java.util.stream.Stream;
 
-import static contacts.factory.RequestFactory.requestInput;
+import static contacts.factory.RequestFactory.*;
 
 public class ContactSearchCommand extends Command {
-
-    private final String again = format("action.again");
 
     @Override
     public void execute() {
@@ -18,20 +17,19 @@ public class ContactSearchCommand extends Command {
     }
 
     public void search() {
-        String query = requestInput(format("enter.search.query.msg"));
-        String regex = format("search.query", query);
+        String query = requestSearchQuery();
+        String regex = PatternFactory.format(SEARCH_QUERY, query);
         List<Contact> contactItems = contactList.search(regex);
-        print("search.result.msg", contactItems.size());
+        print(SEARCH_RESULT_MSG, contactItems.size());
 
         if (contactItems.isEmpty()) {
             return;
         }
 
         list(contactItems);
-        String action = requestInput("\n".concat(format("menu.action.selection.msg",
-                MenuAction.SEARCH.name().toLowerCase(), join(Stream.of("action.number", "action.back", "action.again")))));
+        String action = requestInput(MenuAction.SEARCH);
 
-        if (again.equals(action)) {
+        if (MessageFactory.from(ACTION_AGAIN).equals(action)) {
             search();
         }
 

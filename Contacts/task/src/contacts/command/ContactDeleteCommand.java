@@ -2,6 +2,8 @@ package contacts.command;
 
 import contacts.model.Contact;
 
+import static contacts.factory.RequestFactory.RECORD_DELETE_SUCCESS_MSG;
+
 public class ContactDeleteCommand extends Command {
 
     private Contact contact;
@@ -18,7 +20,7 @@ public class ContactDeleteCommand extends Command {
 
     private void delete() {
         if (contactList.remove(contact)) {
-            print("record.delete.success.msg");
+            print(RECORD_DELETE_SUCCESS_MSG);
         }
     }
 }

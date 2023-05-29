@@ -17,7 +17,7 @@ public class OrganizationBuilder extends ContactBuilder {
 
     @Override
     public void setName() {
-        organization.setOrganizationName(requestOrganisationName());
+        organization.setName(requestOrganisationName());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package contacts.model;
 
 import contacts.domain.ContactField;
-import contacts.factory.MessageFactory;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -9,18 +8,9 @@ import java.util.stream.Stream;
 
 public class Person extends Contact {
 
-    private String name;
     private String surname;
     private String birthdate;
     private String gender;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getSurname() {
         return surname;
@@ -69,12 +59,6 @@ public class Person extends Contact {
                 ", birthdate='" + birthdate + '\'' +
                 ", gender=" + gender +
                 '}';
-    }
-
-    @Override
-    public void info() {
-        System.out.println(MessageFactory.format("person.info",
-                name, surname, birthdate, gender, number, createdTime, lastEditTime));
     }
 
     @Override

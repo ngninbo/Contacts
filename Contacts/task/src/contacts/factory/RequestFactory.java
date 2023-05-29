@@ -28,6 +28,9 @@ public class RequestFactory {
     public static final String PHONE_BOOK_RECORD_SIZE_MSG = "phone.book.record.size.msg";
     public static final String RECORD_ADD_SUCCESS_MSG = "record.add.success.msg";
     public static final String CONTACT_TYPE_UNKNOWN = "contact.type.unknown";
+    public static final String FIELD_INFO = "field.info";
+    public static final String CONTACT_CREATION_TIME = "contact.creation.time";
+    public static final String CONTACT_LAST_EDIT = "contact.last.edit";
 
     public static String requestInput(String message) {
         System.out.print(message.concat(": "));

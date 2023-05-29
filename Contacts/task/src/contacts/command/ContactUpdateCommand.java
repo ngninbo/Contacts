@@ -1,8 +1,10 @@
 package contacts.command;
 
+import contacts.domain.ContactInfo;
 import contacts.domain.MenuAction;
 import contacts.domain.UpdateMenu;
 import contacts.factory.CommandFactory;
+import contacts.factory.ContactInfoFactory;
 import contacts.model.Contact;
 
 import static contacts.factory.RequestFactory.requestInput;
@@ -19,7 +21,7 @@ public class ContactUpdateCommand extends Command {
 
     @Override
     public void execute() {
-        contact.info();
+        ContactInfoFactory.of(contact).ifPresent(ContactInfo::showInfo);
 
         while (process(action)) {
             action = new UpdateMenu().getAction(requestInput(MenuAction.VIEW_RECORD));

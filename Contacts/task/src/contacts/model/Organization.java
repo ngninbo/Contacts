@@ -1,7 +1,6 @@
 package contacts.model;
 
 import contacts.domain.ContactField;
-import contacts.factory.MessageFactory;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -9,16 +8,7 @@ import java.util.stream.Stream;
 
 public class Organization extends Contact {
 
-    private String organizationName;
     private String address;
-
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
-    }
 
     public String getAddress() {
         return address;
@@ -33,32 +23,26 @@ public class Organization extends Contact {
         if (this == o) return true;
         if (!(o instanceof Organization)) return false;
         Organization that = (Organization) o;
-        return Objects.equals(getOrganizationName(), that.getOrganizationName()) && Objects.equals(getAddress(), that.getAddress());
+        return Objects.equals(getName(), that.getName()) && Objects.equals(getAddress(), that.getAddress());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrganizationName(), getAddress());
+        return Objects.hash(getName(), getAddress());
     }
 
     @Override
     public String toString() {
         return "Organization{" +
                 "number='" + number + '\'' +
-                ", organizationName='" + organizationName + '\'' +
+                ", organizationName='" + name + '\'' +
                 ", address='" + address + '\'' +
                 '}';
     }
 
     @Override
-    public void info() {
-        System.out.println(MessageFactory.format("organization.info",
-                organizationName, address, number, createdTime, lastEditTime));
-    }
-
-    @Override
     public String getFullName() {
-        return getOrganizationName();
+        return getName();
     }
 
     @Override
@@ -71,7 +55,7 @@ public class Organization extends Contact {
 
         switch (field) {
             case NAME:
-                setOrganizationName(value);
+                setName(value);
                 break;
             case NUMBER:
                 setNumber(value);
@@ -86,6 +70,6 @@ public class Organization extends Contact {
 
     @Override
     public String appendFieldValues() {
-        return String.join(" ", getFullName(), getNumber(), getAddress());
+        return String.join(" ", getFullName(), getAddress(), getNumber());
     }
 }

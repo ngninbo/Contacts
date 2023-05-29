@@ -726,9 +726,6 @@ files:
 - name: src/contacts/domain/MenuAction.java
   visible: true
   learner_created: true
-- name: src/contacts/domain/ContactUpdateAction.java
-  visible: true
-  learner_created: true
 - name: src/contacts/domain/Gender.java
   visible: true
   learner_created: true
@@ -778,6 +775,21 @@ files:
   visible: true
   learner_created: true
 - name: src/contacts/domain/Menu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/ContactInfo.java
+  visible: true
+  learner_created: true
+- name: test/contacts/utils/SnippetTests.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/PersonInfo.java
+  visible: true
+  learner_created: true
+- name: src/contacts/domain/OrganizationInfo.java
+  visible: true
+  learner_created: true
+- name: src/contacts/factory/ContactInfoFactory.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5327#comment

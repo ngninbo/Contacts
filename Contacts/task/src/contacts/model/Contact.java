@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 public abstract class Contact implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    protected String name;
     protected String number;
     protected LocalDateTime createdTime;
     protected LocalDateTime lastEditTime;
@@ -26,11 +27,25 @@ public abstract class Contact implements Serializable {
         this.number = number;
     }
 
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public LocalDateTime getLastEditTime() {
+        return lastEditTime;
+    }
+
     public void setLastEditTime(LocalDateTime lastEditTime) {
         this.lastEditTime = lastEditTime;
     }
 
-    public abstract void info();
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public abstract String getFullName();
 

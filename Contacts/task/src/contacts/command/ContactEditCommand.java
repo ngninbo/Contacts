@@ -1,5 +1,7 @@
 package contacts.command;
 
+import contacts.domain.ContactInfo;
+import contacts.factory.ContactInfoFactory;
 import contacts.model.Contact;
 import contacts.domain.ContactField;
 import contacts.utils.InputValidator;
@@ -34,7 +36,7 @@ public class ContactEditCommand extends Command {
             contact.setFieldValue(field, value);
             contactList.update(contact);
             print(RECORD_SAVE_MSG);
-            contact.info();
+            ContactInfoFactory.of(contact).ifPresent(ContactInfo::showInfo);
         } catch (IllegalArgumentException e) {
             print(FIELD_INCORRECT_MSG, input);
         }

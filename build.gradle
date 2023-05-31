@@ -68,11 +68,3 @@ configure(subprojects.findAll {it.name != 'util'}) {
 wrapper {
     gradleVersion = hs.gradle.version
 }
-
-dependencies {
-    implementation 'com.mikemybytes:junit5-formatted-source:0.2.0'
-}
-
-repositories {
-    mavenCentral()
-}

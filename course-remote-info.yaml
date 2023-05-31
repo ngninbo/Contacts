@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/204791/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Sat, 27 May 2023 15:21:27 UTC
+update_date: Tue, 30 May 2023 13:21:40 UTC
 stages:
 - id: 228
   step: 5324
@@ -19,10 +19,6 @@ stages:
   is_completed: true
 topics:
   0:
-  - title: Write, compile, and run
-    theory_id: 3739
-  - title: JVM, JRE, and JDK
-    theory_id: 3499
   - title: Computer algorithms
     theory_id: 16547
   - title: The big O notation
@@ -33,8 +29,12 @@ topics:
     theory_id: 16927
   - title: Units of information
     theory_id: 6865
+  - title: Write, compile, and run
+    theory_id: 3739
   - title: IDE
     theory_id: 10996
+  - title: JVM, JRE, and JDK
+    theory_id: 3499
   - title: Introduction to Operating systems
     theory_id: 9704
   - title: Command line overview

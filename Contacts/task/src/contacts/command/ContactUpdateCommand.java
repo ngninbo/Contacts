@@ -29,7 +29,7 @@ public class ContactUpdateCommand extends Command {
         }
     }
 
-    private void execute(Command command) {
+    public void execute(Command command) {
         command.setContactList(contactList);
         command.setContact(contact);
         command.execute();

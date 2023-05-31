@@ -13,12 +13,27 @@ public enum ContactField {
     BIRTH,
     GENDER;
 
+    public static final String CONTACT = "contact";
+
     public String getLabel() {
-        return "contact.".concat(name().toLowerCase());
+        return (CONTACT + ".").concat(name().toLowerCase());
     }
 
     public static List<ContactField> getFieldsToBeValidated() {
         return List.of(ContactField.BIRTH, ContactField.GENDER, ContactField.NUMBER);
+    }
+
+    public static List<String> getFieldLabels(ContactType contactType) {
+        switch (contactType) {
+            case PERSON:
+                return List.of(ContactField.NAME.getLabel(), ContactField.SURNAME.getLabel(),
+                        CONTACT + ".creation.birth", ContactField.GENDER.getLabel(), ContactField.NUMBER.getLabel());
+            case ORGANIZATION:
+                return List.of(ContactField.NAME.getLabel().replace(CONTACT, "organization"),
+                        ContactField.ADDRESS.getLabel(), ContactField.NUMBER.getLabel());
+            default:
+                return List.of();
+        }
     }
 
     public String getRegex() {

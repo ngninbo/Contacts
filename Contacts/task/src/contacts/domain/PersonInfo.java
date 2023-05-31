@@ -20,7 +20,6 @@ public class PersonInfo extends ContactInfo {
 
     @Override
     protected List<String> getFieldLabels() {
-        return List.of(ContactField.NAME.getLabel(), ContactField.SURNAME.getLabel(),
-                "contact.creation.birth", ContactField.GENDER.getLabel(), ContactField.NUMBER.getLabel());
+        return ContactField.getFieldLabels(ContactType.PERSON);
     }
 }

@@ -42,7 +42,7 @@ public class RequestFactory {
     }
 
     public static String requestInput(MenuAction action) {
-        return request(action, MenuFactory.from(action));
+        return request(action, MenuFactory.of(action).map(Menu::getItems).orElse(Stream.of()));
     }
 
     public static String requestField(String fields) {

@@ -1,6 +1,6 @@
 package contacts;
 
-import contacts.command.Command;
+import contacts.domain.CommandProcessor;
 import contacts.domain.MainMenu;
 import contacts.domain.MenuAction;
 import contacts.core.ContactList;
@@ -8,13 +8,12 @@ import contacts.factory.CommandFactory;
 
 import static contacts.factory.RequestFactory.requestInput;
 
-public class PhoneBook {
+public class PhoneBook extends CommandProcessor {
 
     private MenuAction action;
-    private final ContactList contactList;
 
     private PhoneBook(ContactList contactList) {
-        this.contactList = contactList;
+        setContactList(contactList);
     }
 
     public static PhoneBook of(ContactList contactList) {
@@ -30,10 +29,5 @@ public class PhoneBook {
 
     private boolean exit() {
         return MenuAction.EXIT.equals(action);
-    }
-
-    private void execute(Command command) {
-        command.setContactList(contactList);
-        command.execute();
     }
 }

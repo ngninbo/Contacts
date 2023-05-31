@@ -15,7 +15,7 @@ public class OrganizationInfo extends ContactInfo {
 
     @Override
     protected List<String> getFieldLabels() {
-        return List.of("organization.name", ContactField.ADDRESS.getLabel(), ContactField.NUMBER.getLabel());
+        return ContactField.getFieldLabels(ContactType.ORGANIZATION);
     }
 
     @Override

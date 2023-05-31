@@ -2,22 +2,27 @@ package contacts.factory;
 
 import contacts.domain.*;
 
-import java.util.stream.Stream;
+import java.util.Optional;
 
 public class MenuFactory {
 
-    public static Stream<String> from(MenuAction menuAction) {
+    public static Optional<Menu> of(MenuAction menuAction) {
+        return Optional.ofNullable(from(menuAction));
+
+    }
+
+    public static Menu from(MenuAction menuAction) {
         switch (menuAction) {
             case LIST:
-                return new ListMenu().getItems();
+                return new ListMenu();
             case SEARCH:
-                return new SearchMenu().getItems();
+                return new SearchMenu();
             case VIEW_RECORD:
-                return new UpdateMenu().getItems();
+                return new UpdateMenu();
             case MENU:
-                return new MainMenu().getItems();
+                return new MainMenu();
             default:
-                return Stream.of();
+                return null;
         }
 
     }

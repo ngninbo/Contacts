@@ -1,6 +1,6 @@
 package contacts.command;
 
-import contacts.core.ContactList;
+import contacts.domain.CommandProcessor;
 import contacts.factory.MessageFactory;
 import contacts.model.Contact;
 import contacts.utils.InputValidator;
@@ -8,13 +8,7 @@ import contacts.utils.InputValidator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public abstract class Command {
-
-    protected ContactList contactList;
-
-    public void setContactList(ContactList contactList) {
-        this.contactList = contactList;
-    }
+public abstract class Command extends CommandProcessor {
 
     public abstract void execute();
 
@@ -27,9 +21,7 @@ public abstract class Command {
     public void updateItems(String action, List<Contact> contacts) {
         if (InputValidator.isValidAction().test(action, contacts.size())) {
             int number = Integer.parseInt(action) - 1;
-            Command command = new ContactUpdateCommand(contacts.get(number));
-            command.setContactList(contactList);
-            command.execute();
+            execute(new ContactUpdateCommand(contacts.get(number)));
         }
     }
 

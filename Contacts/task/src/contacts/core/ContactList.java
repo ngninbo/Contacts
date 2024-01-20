@@ -32,7 +32,7 @@ public class ContactList extends ArrayList<Contact> {
         this.filename = filename;
     }
 
-    public static ContactList from(String filename) {
+    public static ContactList load(String filename) {
         System.out.println(MessageFactory.format("file.open.msg", filename));
         return ContactLoader.load(filename);
     }

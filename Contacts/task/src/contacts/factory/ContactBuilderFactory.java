@@ -14,7 +14,7 @@ public class ContactBuilderFactory {
             case ORGANIZATION:
                 return new OrganizationBuilder();
             default:
-                return null;
+                throw new IllegalArgumentException("Cannot create contact builder for type=" + type);
         }
     }
 }
